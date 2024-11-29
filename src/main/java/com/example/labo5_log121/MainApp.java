@@ -1,5 +1,7 @@
 package com.example.labo5_log121;
 
+import com.example.labo5_log121.controllers.PerspectiveController;
+import com.example.labo5_log121.views.PerspectiveView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

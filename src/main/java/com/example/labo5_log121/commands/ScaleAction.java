@@ -12,6 +12,6 @@ public class ScaleAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        perspective.setScaleFactor(event.get);
+        //perspective.setScaleFactor(event.get);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.labo5_log121.models;
 
 public class Perspective {
+    private double scaleFactor;
     private double translationX;
     private double translationY;
     private ImageModel imageModel;
@@ -25,6 +26,14 @@ public class Perspective {
 
     public void setTranslationY(double translationY) {
         this.translationY = translationY;
+    }
+
+    public double getScaleFactor() {
+        return scaleFactor;
+    }
+
+    public void setScaleFactor(double scaleFactor) {
+        this.scaleFactor = scaleFactor;
     }
 
     public ImageModel getImageModel() {

@@ -11,6 +11,6 @@ public class TranslationAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        perspective.setTranslation(event. , event.);
+        //perspective.setTranslation(event. , event.);
     }
 }
