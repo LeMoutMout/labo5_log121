@@ -21,20 +21,20 @@ public class CommandManager {
     }
 
     public void executeCommand(AbstractAction action){
-        action.execute();
+        action.actionPerformed(null);
         undoStack.push(action);
         redoStack.clear();
     }
 
     public void undo(){
         AbstractAction action = undoStack.pop();
-        action.undo();
+        action.actionPerformed(null);
         redoStack.push(action);
     }
 
     public void redo(){
         AbstractAction action = redoStack.pop();
-        action.execute();
+        action.actionPerformed(null);
         undoStack.push(action);
     }
 }
