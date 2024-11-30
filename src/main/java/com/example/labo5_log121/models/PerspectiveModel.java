@@ -9,10 +9,10 @@ public class PerspectiveModel extends Subject {
     private double translationY;
     private ImageModel image;
 
-    public PerspectiveModel(double scaleFactor, double translationX, double translationY, ImageModel image) {
-        this.scaleFactor = scaleFactor;
-        this.translationX = translationX;
-        this.translationY = translationY;
+    public PerspectiveModel(ImageModel image) {
+        this.scaleFactor = 0; //a modif je pense
+        this.translationX = 0;
+        this.translationY = 0;
         this.image = image;
     }
 

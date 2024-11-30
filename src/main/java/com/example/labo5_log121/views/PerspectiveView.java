@@ -1,16 +1,17 @@
 package com.example.labo5_log121.views;
 
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 
 public class PerspectiveView extends BorderPane {
-    private MenuBar menuBar;
-    private TabPane tabPane;
-    private Label coordinatesLabel;
-    private Slider zoomSlider;
-    private Button copyButton, pasteButton, undoButton, redoButton;
+    private final MenuBar menuBar;
+    private final ImageView imageView;
+    private final Label coordinatesLabel;
+    private final Slider zoomSlider;
+    private final Button copyButton, pasteButton, undoButton, redoButton;
 
     public PerspectiveView() {
         // Barre de menu
@@ -34,8 +35,8 @@ public class PerspectiveView extends BorderPane {
         setTop(menuBar);
 
         // Onglets pour les perspectives
-        tabPane = new TabPane();
-        setCenter(tabPane);
+        imageView = new ImageView();
+        setCenter(imageView);
 
         // Barre en bas
         HBox bottomBar = new HBox();
@@ -59,15 +60,25 @@ public class PerspectiveView extends BorderPane {
         setBottom(bottomBar);
     }
 
-    public TabPane getTabPane() {
-        return tabPane;
+    public ImageView getImageView() {
+        return imageView;
     }
-
     public MenuBar getMenuBar() {
         return menuBar;
     }
-
     public Slider getZoomSlider() {
         return zoomSlider;
+    }
+    public Button getCopyButton() {
+        return copyButton;
+    }
+    public Button getPasteButton() {
+        return pasteButton;
+    }
+    public Button getUndoButton() {
+        return undoButton;
+    }
+    public Button getRedoButton() {
+        return redoButton;
     }
 }

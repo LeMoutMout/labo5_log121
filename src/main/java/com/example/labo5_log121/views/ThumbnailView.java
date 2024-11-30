@@ -1,21 +1,42 @@
 package com.example.labo5_log121.views;
 
-import javafx.scene.image.Image;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
 
-public class ThumbnailView extends VBox {
-    private ImageView imageView;
+public class ThumbnailView extends BorderPane {
+    private final ImageView imageView;
+    private final MenuBar menuBar;
 
-    public ThumbnailView(String imagePath) {
-        imageView = new ImageView(new Image(imagePath));
-        imageView.setFitWidth(150); // Taille de la vignette
-        imageView.setPreserveRatio(true);
+    public ThumbnailView() {
 
-        getChildren().add(imageView);
+        menuBar = new MenuBar();
+
+        Menu fileMenu = new Menu("Fichier");
+        fileMenu.getItems().addAll(
+                new MenuItem("Nouveau"),
+                new MenuItem("Ouvrir"),
+                new MenuItem("Sauvegarder"),
+                new MenuItem("Fermer tout"),
+                new MenuItem("Quitter")
+        );
+
+        Menu perspectiveMenu = new Menu("Perspective");
+        perspectiveMenu.getItems().add(new MenuItem("Nouvelle perspective"));
+
+        Menu helpMenu = new Menu("Aide");
+
+        menuBar.getMenus().addAll(fileMenu, perspectiveMenu, helpMenu);
+        setTop(menuBar);
+
+        imageView = new ImageView();
+        setCenter(imageView);
     }
 
-    public void setImage(String imagePath) {
-        imageView.setImage(new Image(imagePath));
+    public ImageView getImageView() {
+        return imageView;
+    }
+    public MenuBar getMenuBar() {
+        return menuBar;
     }
 }

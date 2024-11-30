@@ -1,9 +1,8 @@
 package com.example.labo5_log121.controllers;
 
 import com.example.labo5_log121.models.ImageModel;
-import com.example.labo5_log121.models.Perspective;
+import com.example.labo5_log121.models.PerspectiveModel;
 import com.example.labo5_log121.views.PerspectiveView;
-import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -40,7 +39,7 @@ public class PerspectiveController {
 
     private void addNewPerspective(String imagePath) {
         ImageModel imageModel = new ImageModel(imagePath);
-        Perspective perspective = new Perspective(imageModel);
+        PerspectiveModel perspective = new PerspectiveModel(imageModel);
 
         //Tab tab = new Tab("Nouvelle Perspective", perspective);
         //view.getTabPane().getTabs().add(tab);
