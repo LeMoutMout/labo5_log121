@@ -5,8 +5,8 @@ import javafx.scene.layout.*;
 import javafx.scene.image.ImageView;
 
 public class ThumbnailView extends BorderPane {
-    private final ImageView imageView;
     private final MenuBar menuBar;
+    private final TabPane tabPane;
 
     public ThumbnailView() {
 
@@ -29,12 +29,12 @@ public class ThumbnailView extends BorderPane {
         menuBar.getMenus().addAll(fileMenu, perspectiveMenu, helpMenu);
         setTop(menuBar);
 
-        imageView = new ImageView();
-        setCenter(imageView);
+        tabPane = new TabPane();
+        setCenter(tabPane);
     }
 
-    public ImageView getImageView() {
-        return imageView;
+    public TabPane getTabPane() {
+        return tabPane;
     }
     public MenuBar getMenuBar() {
         return menuBar;

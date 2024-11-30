@@ -8,7 +8,7 @@ import javafx.scene.control.Slider;
 
 public class PerspectiveView extends BorderPane {
     private final MenuBar menuBar;
-    private final ImageView imageView;
+    private final TabPane tabPane;
     private final Label coordinatesLabel;
     private final Slider zoomSlider;
     private final Button copyButton, pasteButton, undoButton, redoButton;
@@ -35,8 +35,8 @@ public class PerspectiveView extends BorderPane {
         setTop(menuBar);
 
         // Onglets pour les perspectives
-        imageView = new ImageView();
-        setCenter(imageView);
+        tabPane = new TabPane();
+        setCenter(tabPane);
 
         // Barre en bas
         HBox bottomBar = new HBox();
@@ -60,9 +60,6 @@ public class PerspectiveView extends BorderPane {
         setBottom(bottomBar);
     }
 
-    public ImageView getImageView() {
-        return imageView;
-    }
     public MenuBar getMenuBar() {
         return menuBar;
     }
@@ -80,5 +77,8 @@ public class PerspectiveView extends BorderPane {
     }
     public Button getRedoButton() {
         return redoButton;
+    }
+    public TabPane getTabPane() {
+        return tabPane;
     }
 }
