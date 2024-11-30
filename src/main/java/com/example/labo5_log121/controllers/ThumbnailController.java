@@ -1,12 +1,11 @@
 package com.example.labo5_log121.controllers;
 
 import com.example.labo5_log121.models.ImageModel;
-import com.example.labo5_log121.models.PerspectiveModel;
-import com.example.labo5_log121.views.PerspectiveView;
 import com.example.labo5_log121.views.ThumbnailView;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -37,15 +36,38 @@ public class ThumbnailController {
         ImageModel imageModel = new ImageModel(imagePath);
         imageModel.setImagePath(imagePath);
 
+
         Image image = new Image("file:" + imagePath);
         ImageView imageView = new ImageView(image);
-        imageView.setPreserveRatio(true);
         imageView.setFitWidth(400);
         imageView.setFitHeight(300);
+        imageView.setPreserveRatio(true);
+
+        enableDrag(imageView);
+
+        Pane pane = new Pane(imageView);
+        pane.setPrefSize(800, 600);
 
         Tab tab = new Tab("Nouvelle Perspective");
+        tab.setContent(pane);
         view.getTabPane().getTabs().add(tab);
         view.getTabPane().getSelectionModel().select(tab);
-        tab.setContent(imageView);
+    }
+
+    private void enableDrag(ImageView imageView) {
+        final double[] offsetX = {0};
+        final double[] offsetY = {0};
+
+        imageView.setOnMousePressed(event -> {
+            System.out.println("Mouse pressed at: " + event.getSceneX() + ", " + event.getSceneY());
+            offsetX[0] = event.getSceneX() - imageView.getLayoutX();
+            offsetY[0] = event.getSceneY() - imageView.getLayoutY();
+        });
+
+        imageView.setOnMouseDragged(event -> {
+            System.out.println("Mouse dragged to: " + event.getSceneX() + ", " + event.getSceneY());
+            imageView.setLayoutX(event.getSceneX() - offsetX[0]);
+            imageView.setLayoutY(event.getSceneY() - offsetY[0]);
+        });
     }
 }

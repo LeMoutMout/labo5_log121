@@ -1,7 +1,6 @@
 package com.example.labo5_log121.views;
 
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;

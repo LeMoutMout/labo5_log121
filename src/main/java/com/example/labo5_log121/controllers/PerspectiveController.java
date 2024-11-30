@@ -28,6 +28,8 @@ public class PerspectiveController {
             }
         });
 
+
+
         /*view.getZoomSlider().valueProperty().addListener((obs, oldVal, newVal) -> {
             Tab selectedTab = view.getTabPane().getSelectionModel().getSelectedItem();
             if (selectedTab != null && selectedTab.getContent() instanceof Perspective) {
