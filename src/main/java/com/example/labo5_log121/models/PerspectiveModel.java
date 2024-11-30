@@ -10,7 +10,7 @@ public class PerspectiveModel extends Subject {
     private ImageModel image;
 
     public PerspectiveModel(ImageModel image) {
-        this.scaleFactor = 0; //a modif je pense
+        this.scaleFactor = 1.0; //a modif je pense
         this.translationX = 0;
         this.translationY = 0;
         this.image = image;
@@ -45,5 +45,9 @@ public class PerspectiveModel extends Subject {
         scaleFactor = memento.getScaleFactor();
         translationX = memento.getTranslationX();
         translationY = memento.getTranslationY();
+    }
+
+    private void updateScaleInModel(double scale) {
+        this.setScaleFactor(scale);
     }
 }

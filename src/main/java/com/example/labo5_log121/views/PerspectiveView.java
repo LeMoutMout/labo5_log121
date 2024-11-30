@@ -8,9 +8,11 @@ import javafx.scene.control.Slider;
 public class PerspectiveView extends BorderPane {
     private final MenuBar menuBar;
     private final TabPane tabPane;
-    private final Label coordinatesLabel;
     private final Slider zoomSlider;
-    private final Button copyButton, pasteButton, undoButton, redoButton;
+    /*private final Label coordinatesLabel;
+
+    private final Button copyButton, pasteButton, undoButton, redoButton;*/
+    private final HBox bottomBar;
 
     public PerspectiveView() {
         // Barre de menu
@@ -38,34 +40,57 @@ public class PerspectiveView extends BorderPane {
         setCenter(tabPane);
 
         // Barre en bas
-        HBox bottomBar = new HBox();
-        bottomBar.setSpacing(10);
+        //HBox bottomBar = new HBox();
+        //bottomBar.setSpacing(10);
 
-        coordinatesLabel = new Label("x = 0 ; y = 0");
+        zoomSlider = new Slider(50, 200, 100);
+        bottomBar = new HBox(10);
+        bottomBar.getChildren().addAll(
+                new Label("x = 0 ; y = 0"),
+                new Button("Copier"),
+                new Button("Coller"),
+                new Button("Undo"),
+                new Button("Redo"),
+                new Label("Zoom:"),
+                zoomSlider
+        );
+
+        bottomBar.setVisible(false); // Barre inférieure masquée par défaut
+        setBottom(bottomBar);
+
+
+        /*coordinatesLabel = new Label("x = 0 ; y = 0");
 
         copyButton = new Button("Copier");
         pasteButton = new Button("Coller");
         undoButton = new Button("Undo");
         redoButton = new Button("Redo");
 
-        zoomSlider = new Slider(0, 100, 50);
+        zoomSlider = new Slider(50, 200, 100); // Min: 50%, Max: 200%, Default: 100%
+        zoomSlider.setShowTickLabels(true);
+        zoomSlider.setShowTickMarks(true);
         Label zoomValueLabel = new Label("50%");
 
         zoomSlider.valueProperty().addListener((obs, oldVal, newVal) ->
                 zoomValueLabel.setText(String.format("%.0f%%", newVal.doubleValue()))
         );
+        HBox bottomBar = new HBox(10);
+        bottomBar.getChildren().addAll(coordinatesLabel, copyButton, pasteButton, undoButton, redoButton, new Label("Zoom:"), zoomSlider, zoomValueLabel);
+        setBottom(bottomBar)*/;
+    }
 
-        bottomBar.getChildren().addAll(coordinatesLabel, copyButton, pasteButton, undoButton, redoButton, zoomSlider, zoomValueLabel);
-        setBottom(bottomBar);
+    public void showBottomBar(boolean show) {
+        bottomBar.setVisible(show);
     }
 
     public MenuBar getMenuBar() {
         return menuBar;
     }
+
     public Slider getZoomSlider() {
         return zoomSlider;
     }
-    public Button getCopyButton() {
+    /*public Button getCopyButton() {
         return copyButton;
     }
     public Button getPasteButton() {
@@ -76,7 +101,7 @@ public class PerspectiveView extends BorderPane {
     }
     public Button getRedoButton() {
         return redoButton;
-    }
+    }*/
     public TabPane getTabPane() {
         return tabPane;
     }

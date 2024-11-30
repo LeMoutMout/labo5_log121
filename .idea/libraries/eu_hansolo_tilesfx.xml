@@ -1,0 +1,26 @@
+<component name="libraryTable">
+  <library name="eu.hansolo.tilesfx" type="repository">
+    <properties maven-id="eu.hansolo:tilesfx:21.0.9" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/javafx-sdk-23.0.1/lib/tilesfx-21.0.9.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/javafx-sdk-23.0.1/lib/countries-21.0.17.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/javafx-sdk-23.0.1/lib/heatmap-21.0.5.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/javafx-sdk-23.0.1/lib/toolboxfx-21.0.5.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/javafx-sdk-23.0.1/lib/toolbox-21.0.9.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/javafx-sdk-23.0.1/lib/javafx-base-21.0.4.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/javafx-sdk-23.0.1/lib/javafx-base-21.0.4-win.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/javafx-sdk-23.0.1/lib/javafx-graphics-21.0.4.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/javafx-sdk-23.0.1/lib/javafx-graphics-21.0.4-win.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/javafx-sdk-23.0.1/lib/javafx-controls-21.0.4.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/javafx-sdk-23.0.1/lib/javafx-controls-21.0.4-win.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/javafx-sdk-23.0.1/lib/javafx-swing-21.0.4.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/javafx-sdk-23.0.1/lib/javafx-swing-21.0.4-win.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/javafx-sdk-23.0.1/lib/javafx-web-21.0.4.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/javafx-sdk-23.0.1/lib/javafx-web-21.0.4-win.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/javafx-sdk-23.0.1/lib/javafx-media-21.0.4.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/javafx-sdk-23.0.1/lib/javafx-media-21.0.4-win.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

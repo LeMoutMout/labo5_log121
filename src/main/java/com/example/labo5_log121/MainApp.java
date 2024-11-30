@@ -11,8 +11,8 @@ import javafx.stage.Stage;
 public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        ThumbnailView view = new ThumbnailView();
-        new ThumbnailController(view);
+        PerspectiveView view = new PerspectiveView();
+        new PerspectiveController(view);
 
         Scene scene = new Scene(view, 800, 600);
         stage.setTitle("PhotoEditor - MVC");
