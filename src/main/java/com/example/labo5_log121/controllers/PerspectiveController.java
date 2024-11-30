@@ -22,17 +22,18 @@ public class PerspectiveController {
     private final PerspectiveModel perspectiveModel;
     private String lastLoadedImagePath = null;// Pour stocker l'image chargée
 
-    public PerspectiveController(PerspectiveView view) {
+    public PerspectiveController(PerspectiveView view, ImageModel imageModel) {
         this.view = view;
-        perspectiveModel = new PerspectiveModel(new ImageModel("C:\\Users\\pitch\\OneDrive\\Images\\comment-adopter-chien.jpg"));
+        perspectiveModel = new PerspectiveModel(imageModel);
         perspectiveModel.addObserver(view);
         initialize();
+        System.out.println("vouvou");
     }
 
     private void initialize() {
 
         // Affichage des boutonnn en bas pourle zomm etc...
-        view.getTabPane().getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
+        /*view.getTabPane().getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
             if (newTab != null && !"read-only".equals(newTab.getUserData())) {
                 view.showBottomBar(true); // Afficher la barre d'outils
             } else {
@@ -89,7 +90,7 @@ public class PerspectiveController {
                     new ScaleAction(perspectiveModel).actionPerformed(event);
                 }
             }
-        });
+        });*/
     }
 
     private void newImage(String imagePath) {
@@ -110,8 +111,8 @@ public class PerspectiveController {
         tab.setUserData("read-only");
         tab.setClosable(false);
 
-        view.getTabPane().getTabs().add(tab);
-        view.getTabPane().getSelectionModel().select(tab);
+        //view.getTabPane().getTabs().add(tab);
+        //view.getTabPane().getSelectionModel().select(tab);
     }
 
     private void addNewPerspective() {
@@ -128,8 +129,8 @@ public class PerspectiveController {
         Tab tab = new Tab("Nouvelle Perspective");
         tab.setContent(pane);
 
-        view.getTabPane().getTabs().add(tab);
-        view.getTabPane().getSelectionModel().select(tab);
+        //view.getTabPane().getTabs().add(tab);
+        //view.getTabPane().getSelectionModel().select(tab);
     }
 }
 

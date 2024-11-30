@@ -1,6 +1,7 @@
 package com.example.labo5_log121.controllers;
 
 import com.example.labo5_log121.models.ImageModel;
+import com.example.labo5_log121.views.PerspectiveView;
 import com.example.labo5_log121.views.ThumbnailView;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
@@ -13,6 +14,7 @@ import java.io.File;
 
 public class ThumbnailController {
     private ThumbnailView view;
+    private String lastLoadedImagePath = null;
 
     public ThumbnailController(ThumbnailView view) {
         this.view = view;
@@ -20,54 +22,66 @@ public class ThumbnailController {
     }
 
     private void initialize() {
-        view.getMenuBar().getMenus().get(0).getItems().get(1).setOnAction(event -> {
+        // Nouveau
+        /*view.getMenuBar().getMenus().get(0).getItems().get(0).setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Ouvrir une image");
+            fileChooser.setTitle("Sélectionnerune image");
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg"));
             File file = fileChooser.showOpenDialog(new Stage());
 
             if (file != null) {
-                addNewTab(file.getAbsolutePath());
+                lastLoadedImagePath = file.getAbsolutePath();
+                newImage(file.getAbsolutePath());
             }
         });
+
+        // Nouvelle perspective
+        view.getMenuBar().getMenus().get(1).getItems().get(0).setOnAction(event -> {
+            addNewPerspective();
+        });*/
     }
 
-    private void addNewTab(String imagePath) {
+    private void newImage(String imagePath) {
         ImageModel imageModel = new ImageModel(imagePath);
         imageModel.setImagePath(imagePath);
 
-
-        Image image = new Image("file:" + imagePath);
-        ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(400);
-        imageView.setFitHeight(300);
+        ImageView imageView = new ImageView("file:" + imagePath);
         imageView.setPreserveRatio(true);
+        imageView.setFitWidth(800);
+        imageView.setFitHeight(600);
 
-        enableDrag(imageView);
+        Pane pane = new Pane(imageView);
+        pane.setPrefSize(800, 600);
+
+        Tab tab = new Tab(new File(imagePath).getName());
+        tab.setContent(pane);
+
+        tab.setUserData("read-only");
+        tab.setClosable(false);
+
+        //view.getTabPane().getTabs().add(tab);
+        //view.getTabPane().getSelectionModel().select(tab);
+    }
+
+    private void addNewPerspective() {
+        ImageModel imageModel = new ImageModel(lastLoadedImagePath);
+        String imagePath = imageModel.getImagePath();
+        ImageView imageView = new ImageView("file:" + imagePath);
+        imageView.setPreserveRatio(true);
+        imageView.setFitWidth(800);
+        imageView.setFitHeight(600);
+
+        //PerspectiveView perspectiveView = new PerspectiveView(imageView);
+        new PerspectiveController(perspectiveView, imageModel);
+        System.out.println("yoyo");
 
         Pane pane = new Pane(imageView);
         pane.setPrefSize(800, 600);
 
         Tab tab = new Tab("Nouvelle Perspective");
         tab.setContent(pane);
-        view.getTabPane().getTabs().add(tab);
-        view.getTabPane().getSelectionModel().select(tab);
-    }
 
-    private void enableDrag(ImageView imageView) {
-        final double[] offsetX = {0};
-        final double[] offsetY = {0};
-
-        imageView.setOnMousePressed(event -> {
-            System.out.println("Mouse pressed at: " + event.getSceneX() + ", " + event.getSceneY());
-            offsetX[0] = event.getSceneX() - imageView.getLayoutX();
-            offsetY[0] = event.getSceneY() - imageView.getLayoutY();
-        });
-
-        imageView.setOnMouseDragged(event -> {
-            System.out.println("Mouse dragged to: " + event.getSceneX() + ", " + event.getSceneY());
-            imageView.setLayoutX(event.getSceneX() - offsetX[0]);
-            imageView.setLayoutY(event.getSceneY() - offsetY[0]);
-        });
+        //view.getTabPane().getTabs().add(tab);
+        //view.getTabPane().getSelectionModel().select(tab);
     }
 }
