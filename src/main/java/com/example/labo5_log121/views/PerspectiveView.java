@@ -1,11 +1,15 @@
 package com.example.labo5_log121.views;
 
+import com.example.labo5_log121.models.PerspectiveModel;
+import com.example.labo5_log121.models.Subject;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 
-public class PerspectiveView extends BorderPane {
+public class PerspectiveView extends BorderPane implements Observer {
     private final MenuBar menuBar;
     private final TabPane tabPane;
     private final Slider zoomSlider;
@@ -13,8 +17,9 @@ public class PerspectiveView extends BorderPane {
 
     private final Button copyButton, pasteButton, undoButton, redoButton;*/
     private final HBox bottomBar;
+    private ImageView imageView;
 
-    public PerspectiveView() {
+    public PerspectiveView(ImageView imageView) {
         // Barre de menu
         menuBar = new MenuBar();
 
@@ -39,6 +44,13 @@ public class PerspectiveView extends BorderPane {
         tabPane = new TabPane();
         setCenter(tabPane);
 
+        this.imageView = imageView;
+
+        Tab tab = new Tab("Nouvelle Image");
+        tab.setContent(imageView);
+        tab.setClosable(true);
+        tabPane.getTabs().add(tab);
+
         // Barre en bas
         //HBox bottomBar = new HBox();
         //bottomBar.setSpacing(10);
@@ -55,7 +67,6 @@ public class PerspectiveView extends BorderPane {
                 zoomSlider
         );
 
-        bottomBar.setVisible(false); // Barre inférieure masquée par défaut
         setBottom(bottomBar);
 
 
@@ -104,5 +115,18 @@ public class PerspectiveView extends BorderPane {
     }*/
     public TabPane getTabPane() {
         return tabPane;
+    }
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+
+    @Override
+    public void update(Subject subject) {
+        PerspectiveModel perspectiveModel = (PerspectiveModel) subject;
+        imageView.setScaleY(perspectiveModel.getScaleFactor());
+        imageView.setScaleX(perspectiveModel.getScaleFactor());
+        imageView.setLayoutX(perspectiveModel.getTranslationX());
+        imageView.setLayoutY(perspectiveModel.getTranslationY());
     }
 }

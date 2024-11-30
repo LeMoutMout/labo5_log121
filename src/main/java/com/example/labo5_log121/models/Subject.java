@@ -4,7 +4,7 @@ import com.example.labo5_log121.views.Observer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Subject {
+public abstract class Subject {
     private final List<Observer> observers = new ArrayList<>();
 
     public void addObserver(Observer observer) {

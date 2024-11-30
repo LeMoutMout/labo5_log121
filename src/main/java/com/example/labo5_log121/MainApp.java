@@ -6,12 +6,14 @@ import com.example.labo5_log121.views.PerspectiveView;
 import com.example.labo5_log121.views.ThumbnailView;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        PerspectiveView view = new PerspectiveView();
+        ImageView imageView = new ImageView("file:C:\\Users\\pitch\\OneDrive\\Images\\comment-adopter-chien.jpg");
+        PerspectiveView view = new PerspectiveView(imageView);
         new PerspectiveController(view);
 
         Scene scene = new Scene(view, 800, 600);

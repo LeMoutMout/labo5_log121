@@ -1,40 +1,35 @@
 package com.example.labo5_log121.commands;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.labo5_log121.models.PerspectiveModel;
 import java.util.Stack;
 
 public class CommandManager {
     private static final CommandManager commandManagerInstance = new CommandManager();
-    private final Stack<AbstractAction> undoStack;
-    private final Stack<AbstractAction> redoStack;
-    private final List<Memento> history;
+    private final Stack<Memento> redoStack;
+    private final Stack<Memento> undoStack;
 
     private CommandManager(){
         undoStack = new Stack<>();
         redoStack = new Stack<>();
-        history = new ArrayList<>();
     }
 
     public static CommandManager getInstance(){
         return commandManagerInstance;
     }
 
-    public void executeCommand(AbstractAction action){
-        action.actionPerformed(null);
-        undoStack.push(action);
-        redoStack.clear();
+    public void undo(PerspectiveModel perspectiveModel){
+        Memento memento = undoStack.pop();
+        perspectiveModel.restore(memento);
+        redoStack.push(memento);
     }
 
-    public void undo(){
-        AbstractAction action = undoStack.pop();
-        action.actionPerformed(null);
-        redoStack.push(action);
+    public void redo(PerspectiveModel perspectiveModel){
+        Memento memento = redoStack.pop();
+        perspectiveModel.restore(memento);
+        undoStack.push(memento);
     }
 
-    public void redo(){
-        AbstractAction action = redoStack.pop();
-        action.actionPerformed(null);
-        undoStack.push(action);
+    public void add(Memento memento){
+        undoStack.add(memento);
     }
 }

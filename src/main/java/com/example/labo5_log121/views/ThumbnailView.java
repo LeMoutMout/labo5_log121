@@ -2,7 +2,6 @@ package com.example.labo5_log121.views;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.image.ImageView;
 
 public class ThumbnailView extends BorderPane {
     private final MenuBar menuBar;

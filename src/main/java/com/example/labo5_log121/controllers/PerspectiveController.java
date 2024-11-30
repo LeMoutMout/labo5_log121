@@ -1,5 +1,6 @@
 package com.example.labo5_log121.controllers;
 
+import com.example.labo5_log121.commands.ScaleAction;
 import com.example.labo5_log121.models.ImageModel;
 import com.example.labo5_log121.models.PerspectiveModel;
 import com.example.labo5_log121.views.PerspectiveView;
@@ -18,14 +19,18 @@ import java.io.File;
 
 public class PerspectiveController {
     private final PerspectiveView view;
-    private String lastLoadedImagePath = null; // Pour stocker l'image chargée
+    private final PerspectiveModel perspectiveModel;
+    private String lastLoadedImagePath = null;// Pour stocker l'image chargée
 
     public PerspectiveController(PerspectiveView view) {
         this.view = view;
+        perspectiveModel = new PerspectiveModel(new ImageModel("C:\\Users\\pitch\\OneDrive\\Images\\comment-adopter-chien.jpg"));
+        perspectiveModel.addObserver(view);
         initialize();
     }
 
     private void initialize() {
+
         // Affichage des boutonnn en bas pourle zomm etc...
         view.getTabPane().getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
             if (newTab != null && !"read-only".equals(newTab.getUserData())) {
@@ -81,19 +86,7 @@ public class PerspectiveController {
             if (selectedTab != null && !"read-only".equals(selectedTab.getUserData())) {
                 Pane pane = (Pane) selectedTab.getContent();
                 if (!pane.getChildren().isEmpty() && pane.getChildren().get(0) instanceof ImageView) {
-                    ImageView imageView = (ImageView) pane.getChildren().get(0);
-
-                    double delta = event.getDeltaY();
-                    double currentZoom = view.getZoomSlider().getValue();
-                    double newZoom = currentZoom + delta / 10;
-
-                    newZoom = Math.max(view.getZoomSlider().getMin(), Math.min(view.getZoomSlider().getMax(), newZoom));
-
-                    double zoomFactor = newZoom / 100.0;
-                    imageView.setScaleX(zoomFactor);
-                    imageView.setScaleY(zoomFactor);
-
-                    view.getZoomSlider().setValue(newZoom);
+                    new ScaleAction(perspectiveModel).actionPerformed(event);
                 }
             }
         });
