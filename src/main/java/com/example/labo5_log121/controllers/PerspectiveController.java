@@ -9,14 +9,6 @@ import com.example.labo5_log121.views.PerspectiveView;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
-import javafx.scene.control.Tab;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.scene.layout.Pane;
-
-import java.io.File;
 
 public class PerspectiveController {
     private final PerspectiveView view;

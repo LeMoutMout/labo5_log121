@@ -1,28 +1,19 @@
 package com.example.labo5_log121.controllers;
 
-import com.example.labo5_log121.commands.ScaleAction;
 import com.example.labo5_log121.models.ImageModel;
-<<<<<<< HEAD
-=======
 import com.example.labo5_log121.models.PerspectiveModel;
->>>>>>> momo
 import com.example.labo5_log121.views.MainView;
 import com.example.labo5_log121.views.PerspectiveView;
 import com.example.labo5_log121.views.ThumbnailView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-<<<<<<< HEAD
 import java.io.File;
-=======
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
->>>>>>> momo
 
 public class MainController {
     private MainView mainView;
@@ -42,15 +33,12 @@ public class MainController {
 
         // Menu "Nouvelle perspective"
         mainView.getMenuBar().getMenus().get(1).getItems().get(0).setOnAction(event -> createNewPerspective());
-<<<<<<< HEAD
-=======
 
         // Menu "Sauvegarder"
         mainView.getMenuBar().getMenus().get(0).getItems().get(2).setOnAction(event -> saveState());
 
         // Menu "Ouvrir"
         mainView.getMenuBar().getMenus().get(0).getItems().get(1).setOnAction(event -> openState());
->>>>>>> momo
     }
 
     // Méthode pour ouvrir une image et l'afficher dans un onglet Thumbnail
@@ -92,8 +80,6 @@ public class MainController {
             tabPane.getTabs().add(perspectiveTab);
         }
     }
-<<<<<<< HEAD
-=======
 
     // Méthode pour sauvegarder l'état
     private void saveState() {
@@ -159,5 +145,4 @@ public class MainController {
             mainView.getTabPane().getTabs().add(tab);
         }
     }
->>>>>>> momo
 }
