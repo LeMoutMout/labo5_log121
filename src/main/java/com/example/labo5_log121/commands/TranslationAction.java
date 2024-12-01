@@ -16,16 +16,27 @@ public class TranslationAction extends AbstractAction {
 
     @Override
     public void actionPerformed(Event event) {
-        // Sauvegarde de l'état actuel dans le Memento
-        CommandManager.getInstance().add(perspective,perspective.createMemento());
+        if (!(event instanceof MouseEvent)) {
+            return;
+        }
 
         MouseEvent mouseEvent = (MouseEvent) event;
 
+        // Calculer la nouvelle translation
         double deltaX = mouseEvent.getSceneX() - initialDeltaX;
         double deltaY = mouseEvent.getSceneY() - initialDeltaY;
 
-        perspective.setTranslation(deltaX, deltaY);
-        perspective.setUndoButtonDisabled(false);
+        // Mettre à jour le modèle
+        perspective.setTranslation(
+                perspective.getTranslationX() + deltaX,
+                perspective.getTranslationY() + deltaY
+        );
+
+        // Sauvegarder l'état après modification
+        CommandManager.getInstance().add(perspective, perspective.createMemento());
+
+        System.out.println("Nouvelle translation : X=" + perspective.getTranslationX() + ", Y=" + perspective.getTranslationY());
     }
+
 }
 
