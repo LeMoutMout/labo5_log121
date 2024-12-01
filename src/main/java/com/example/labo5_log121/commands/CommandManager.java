@@ -3,6 +3,8 @@ package com.example.labo5_log121.commands;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import com.example.labo5_log121.commands.Memento;
+
 
 public class CommandManager {
     private static final CommandManager commandManagerInstance = new CommandManager();
@@ -21,20 +23,34 @@ public class CommandManager {
     }
 
     public void executeCommand(AbstractAction action){
-        action.actionPerformed(null);
-        undoStack.push(action);
-        redoStack.clear();
+        if (action == null) {
+            throw new IllegalArgumentException("La commande ne peut pas être null.");
+        }
+
+        try {
+            action.actionPerformed(null);
+            undoStack.push(action);
+            redoStack.clear();
+        } catch (Exception e) {
+            System.err.println("Erreur lors de l'exécution de la commande : " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public void undo(){
-        AbstractAction action = undoStack.pop();
-        action.actionPerformed(null);
-        redoStack.push(action);
+        if(!undoStack.isEmpty()) {
+            AbstractAction action = undoStack.pop();
+            action.actionPerformed(null);
+            redoStack.push(action);
+        }
     }
 
     public void redo(){
-        AbstractAction action = redoStack.pop();
-        action.actionPerformed(null);
-        undoStack.push(action);
+        if(!redoStack.isEmpty()) {
+            AbstractAction action = redoStack.pop();
+            action.actionPerformed(null);
+            undoStack.push(action);
+        }
     }
+
 }

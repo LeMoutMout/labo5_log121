@@ -1,24 +1,24 @@
 package com.example.labo5_log121.controllers;
 
+import com.example.labo5_log121.commands.CommandManager;
+import com.example.labo5_log121.commands.TranslationAction;
 import com.example.labo5_log121.models.ImageModel;
 import com.example.labo5_log121.models.PerspectiveModel;
 import com.example.labo5_log121.views.PerspectiveView;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
+import javafx.scene.control.Tab;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
-import javafx.scene.image.ImageView;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.beans.value.ChangeListener;
-
 
 import java.io.File;
 
 public class PerspectiveController {
     private final PerspectiveView view;
-    private String lastLoadedImagePath = null; // Pour stocker l'image chargée
+    private PerspectiveModel perspectiveModel;
+    private String lastLoadedImagePath = null; // Pour stocker le chemin de la dernière image chargée
+    private double initialMouseX, initialMouseY; // Pour stocker la position initiale de la souris lors d'une translation
 
     public PerspectiveController(PerspectiveView view) {
         this.view = view;
@@ -26,7 +26,7 @@ public class PerspectiveController {
     }
 
     private void initialize() {
-        // Affichage des boutonnn en bas pourle zomm etc...
+        // Affichage des boutons en bas (Zoom, etc.)
         view.getTabPane().getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
             if (newTab != null && !"read-only".equals(newTab.getUserData())) {
                 view.showBottomBar(true); // Afficher la barre d'outils
@@ -35,8 +35,7 @@ public class PerspectiveController {
             }
         });
 
-
-        // Nouveau
+        // Gestion du menu "Nouveau"
         view.getMenuBar().getMenus().get(0).getItems().get(0).setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Sélectionner une image");
@@ -49,14 +48,11 @@ public class PerspectiveController {
             }
         });
 
-        // Nouvelle perspective
-        view.getMenuBar().getMenus().get(1).getItems().get(0).setOnAction(event -> {
-            addNewPerspective();
-        });
+        // Gestion du menu "Nouvelle Perspective"
+        view.getMenuBar().getMenus().get(1).getItems().get(0).setOnAction(event -> addNewPerspective());
 
-        // Zoom
+        // Gestion du Zoom
         view.getZoomSlider().valueProperty().addListener((obs, oldVal, newVal) -> {
-
             Tab selectedTab = view.getTabPane().getSelectionModel().getSelectedItem();
             if (selectedTab != null && selectedTab.getContent() instanceof Pane) {
                 Pane pane = (Pane) selectedTab.getContent();
@@ -74,34 +70,40 @@ public class PerspectiveController {
             }
         });
 
-        // Zoom avec souris
-        view.getTabPane().setOnScroll(event -> {
-            Tab selectedTab = view.getTabPane().getSelectionModel().getSelectedItem();
-
-            if (selectedTab != null && !"read-only".equals(selectedTab.getUserData())) {
-                Pane pane = (Pane) selectedTab.getContent();
-                if (!pane.getChildren().isEmpty() && pane.getChildren().get(0) instanceof ImageView) {
-                    ImageView imageView = (ImageView) pane.getChildren().get(0);
-
-                    double delta = event.getDeltaY();
-                    double currentZoom = view.getZoomSlider().getValue();
-                    double newZoom = currentZoom + delta / 10;
-
-                    newZoom = Math.max(view.getZoomSlider().getMin(), Math.min(view.getZoomSlider().getMax(), newZoom));
-
-                    double zoomFactor = newZoom / 100.0;
-                    imageView.setScaleX(zoomFactor);
-                    imageView.setScaleY(zoomFactor);
-
-                    view.getZoomSlider().setValue(newZoom);
-                }
-            }
-        });
+        // Gestion des translations avec la souris
+        view.getTabPane().setOnMousePressed(this::handleMousePressed);
+        view.getTabPane().setOnMouseDragged(this::handleMouseDragged);
     }
+
+    private void handleMousePressed(MouseEvent event) {
+        initialMouseX = event.getSceneX();
+        initialMouseY = event.getSceneY();
+    }
+
+    private void handleMouseDragged(MouseEvent event) {
+        Tab selectedTab = view.getTabPane().getSelectionModel().getSelectedItem();
+        if (selectedTab != null && selectedTab.getUserData() instanceof PerspectiveModel) {
+            perspectiveModel = (PerspectiveModel) selectedTab.getUserData();
+
+            double deltaX = event.getSceneX() - initialMouseX;
+            double deltaY = event.getSceneY() - initialMouseY;
+
+            perspectiveModel.setTranslation(
+                    perspectiveModel.getTranslationX() + deltaX,
+                    perspectiveModel.getTranslationY() + deltaY
+            );
+
+            initialMouseX = event.getSceneX();
+            initialMouseY = event.getSceneY();
+        }
+    }
+
+
+
+
 
     private void newImage(String imagePath) {
         ImageModel imageModel = new ImageModel(imagePath);
-        imageModel.setImagePath(imagePath);
 
         ImageView imageView = new ImageView("file:" + imagePath);
         imageView.setPreserveRatio(true);
@@ -113,7 +115,6 @@ public class PerspectiveController {
 
         Tab tab = new Tab(new File(imagePath).getName());
         tab.setContent(pane);
-
         tab.setUserData("read-only");
         tab.setClosable(false);
 
@@ -123,8 +124,9 @@ public class PerspectiveController {
 
     private void addNewPerspective() {
         ImageModel imageModel = new ImageModel(lastLoadedImagePath);
-        String imagePath = imageModel.getImagePath();
-        ImageView imageView = new ImageView("file:" + imagePath);
+        PerspectiveModel newPerspectiveModel = new PerspectiveModel(imageModel);
+
+        ImageView imageView = new ImageView("file:" + imageModel.getImagePath());
         imageView.setPreserveRatio(true);
         imageView.setFitWidth(800);
         imageView.setFitHeight(600);
@@ -134,9 +136,14 @@ public class PerspectiveController {
 
         Tab tab = new Tab("Nouvelle Perspective");
         tab.setContent(pane);
+        tab.setUserData(newPerspectiveModel);
+
+        newPerspectiveModel.addObserver(view);
 
         view.getTabPane().getTabs().add(tab);
         view.getTabPane().getSelectionModel().select(tab);
+
+        view.enableDrag(imageView, newPerspectiveModel);
     }
 }
 

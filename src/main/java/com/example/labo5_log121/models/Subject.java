@@ -16,8 +16,10 @@ public class Subject {
     }
 
     public void notifyObservers() {
+        System.out.println("Notifiant les observateurs : " + observers.size() + " observateur(s).");
         for (Observer observer : observers) {
             observer.update(this);
         }
     }
+
 }
