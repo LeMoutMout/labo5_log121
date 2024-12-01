@@ -2,6 +2,12 @@ package com.example.labo5_log121.views;
 
 import com.example.labo5_log121.models.PerspectiveModel;
 import com.example.labo5_log121.models.Subject;
+<<<<<<< HEAD
+=======
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+>>>>>>> thomas
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;

@@ -6,13 +6,26 @@ import javafx.event.Event;
 import javafx.scene.input.ScrollEvent;
 
 public class TranslationAction extends AbstractAction {
+    private final double deltaX;
+    private final double deltaY;
 
-    public TranslationAction(PerspectiveModel perspective) {
+    public TranslationAction(PerspectiveModel perspective, double deltaX, double deltaY) {
         super(perspective);
+        this.deltaX = deltaX;
+        this.deltaY = deltaY;
     }
 
     @Override
     public void actionPerformed(Event event) {
         //perspective.setTranslation(event. , event.);
+=======
+        double newTranslationX = perspective.getTranslationX() + deltaX;
+        double newTranslationY = perspective.getTranslationY() + deltaY;
+
+        perspective.setTranslation(newTranslationX, newTranslationY);
+
+        System.out.println("Translation appliquée : X=" + newTranslationX + ", Y=" + newTranslationY);
+>>>>>>> thomas
     }
 }
+

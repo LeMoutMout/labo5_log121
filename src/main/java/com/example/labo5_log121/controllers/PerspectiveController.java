@@ -10,20 +10,29 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
+=======
+import com.example.labo5_log121.commands.TranslationAction;
+import com.example.labo5_log121.models.ImageModel;
+import com.example.labo5_log121.models.PerspectiveModel;
+import com.example.labo5_log121.views.PerspectiveView;
+import javafx.scene.control.Tab;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+>>>>>>> thomas
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
-import javafx.scene.image.ImageView;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.beans.value.ChangeListener;
-
 
 import java.io.File;
 
 public class PerspectiveController {
     private final PerspectiveView view;
     private final PerspectiveModel perspectiveModel;
+=======
+    private PerspectiveModel perspectiveModel;
+    private String lastLoadedImagePath = null; // Pour stocker le chemin de la dernière image chargée
+    private double initialMouseX, initialMouseY; // Pour stocker la position initiale de la souris lors d'une translation
+>>>>>>> thomas
 
     public PerspectiveController(PerspectiveView view, ImageModel imageModel) {
         this.view = view;

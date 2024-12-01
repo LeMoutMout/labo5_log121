@@ -20,6 +20,14 @@ public class PerspectiveModel extends Subject {
         return scaleFactor;
     }
 
+<<<<<<< HEAD
+=======
+    public void setScaleFactor(double scaleFactor) {
+        this.scaleFactor = scaleFactor;
+        notifyObservers();
+    }
+
+>>>>>>> thomas
     public double getTranslationX() {
         return translationX;
     }
