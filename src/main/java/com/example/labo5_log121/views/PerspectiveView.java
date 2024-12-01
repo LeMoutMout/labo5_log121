@@ -2,33 +2,17 @@ package com.example.labo5_log121.views;
 
 import com.example.labo5_log121.models.PerspectiveModel;
 import com.example.labo5_log121.models.Subject;
-<<<<<<< HEAD
-=======
-import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
->>>>>>> thomas
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
 import javafx.scene.control.ScrollPane;
 
-<<<<<<< HEAD
 public class PerspectiveView extends Pane implements Observer {
     private final ImageView imageView;
-=======
-public class PerspectiveView extends BorderPane implements Observer {
-    private final MenuBar menuBar;
-    private final TabPane tabPane;
     private final Slider zoomSlider;
-    /*private final Label coordinatesLabel;
-
-    private final Button copyButton, pasteButton, undoButton, redoButton;*/
->>>>>>> thomas
     private final HBox bottomBar;
-    private final Slider zoomSlider;
 
     public PerspectiveView(String imagePath) {
         // Crée l'ImageView pour l'image
@@ -70,35 +54,19 @@ public class PerspectiveView extends BorderPane implements Observer {
     }
 
     public HBox getBottomBar(){return bottomBar;}
+    public ImageView getImageView(){return imageView;}
 
     @Override
     public void update(Subject subject) {
         PerspectiveModel perspectiveModel = (PerspectiveModel) subject;
         imageView.setScaleY(perspectiveModel.getScaleFactor());
         imageView.setScaleX(perspectiveModel.getScaleFactor());
-        imageView.setLayoutX(perspectiveModel.getTranslationX());
-        imageView.setLayoutY(perspectiveModel.getTranslationY());
+        imageView.setTranslateX(perspectiveModel.getTranslationX());
+        imageView.setTranslateY(perspectiveModel.getTranslationY());
         zoomSlider.setValue(perspectiveModel.getScaleFactor()*100);
     }
 
-    public void enableDrag(ImageView imageView, PerspectiveModel model) {
-        final double[] initialX = {0};
-        final double[] initialY = {0};
-
-        imageView.setOnMousePressed(event -> {
-            initialX[0] = event.getSceneX() - model.getTranslationX();
-            initialY[0] = event.getSceneY() - model.getTranslationY();
-        });
-
-        imageView.setOnMouseDragged(event -> {
-            double deltaX = event.getSceneX() - initialX[0];
-            double deltaY = event.getSceneY() - initialY[0];
-
-            model.setTranslation(deltaX, deltaY);
-        });
-    }
-
-    @Override
+    /*@Override
     public void update(Subject subject) {
         if (subject instanceof PerspectiveModel) {
             PerspectiveModel model = (PerspectiveModel) subject;
@@ -122,7 +90,5 @@ public class PerspectiveView extends BorderPane implements Observer {
         } else {
             System.out.println("Mise à jour ignorée : Sujet non reconnu.");
         }
-    }
-
-
+    }*/
 }

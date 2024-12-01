@@ -1,16 +1,8 @@
 package com.example.labo5_log121.commands;
 
 import com.example.labo5_log121.models.PerspectiveModel;
-<<<<<<< HEAD
-import com.example.labo5_log121.views.PerspectiveView;
 import javafx.event.Event;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.input.ScrollEvent;
-=======
-import javafx.event.ActionEvent;
-import javafx.event.Event;
->>>>>>> thomas
 
 public class ScaleAction extends AbstractAction {
 
@@ -30,8 +22,6 @@ public class ScaleAction extends AbstractAction {
 
     @Override
     public void actionPerformed(Event event) {
-<<<<<<< HEAD
-
         // Sauvegarde de l'état actuel dans le Memento
         CommandManager.getInstance().add(perspective,perspective.createMemento());
 
@@ -53,8 +43,5 @@ public class ScaleAction extends AbstractAction {
 
         // Met à jour le facteur de zoom
         perspective.setScaleFactor(newZoom);
-=======
-        //perspective.setScaleFactor(event.get);
->>>>>>> thomas
     }
 }

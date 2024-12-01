@@ -1,35 +1,31 @@
 package com.example.labo5_log121.commands;
 
 import com.example.labo5_log121.models.PerspectiveModel;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
-<<<<<<< HEAD
-import javafx.scene.input.ScrollEvent;
-=======
->>>>>>> thomas
+import javafx.scene.input.MouseEvent;
 
 public class TranslationAction extends AbstractAction {
-    private final double deltaX;
-    private final double deltaY;
+    private final double initialDeltaX;
+    private final double initialDeltaY;
 
-    public TranslationAction(PerspectiveModel perspective, double deltaX, double deltaY) {
+    public TranslationAction(PerspectiveModel perspective, double initialDeltaX, double initialDeltaY) {
         super(perspective);
-        this.deltaX = deltaX;
-        this.deltaY = deltaY;
+        this.initialDeltaX = initialDeltaX;
+        this.initialDeltaY = initialDeltaY;
     }
 
     @Override
     public void actionPerformed(Event event) {
-<<<<<<< HEAD
-        //perspective.setTranslation(event. , event.);
-=======
-        double newTranslationX = perspective.getTranslationX() + deltaX;
-        double newTranslationY = perspective.getTranslationY() + deltaY;
+        // Sauvegarde de l'état actuel dans le Memento
+        CommandManager.getInstance().add(perspective,perspective.createMemento());
 
-        perspective.setTranslation(newTranslationX, newTranslationY);
+        MouseEvent mouseEvent = (MouseEvent) event;
 
-        System.out.println("Translation appliquée : X=" + newTranslationX + ", Y=" + newTranslationY);
->>>>>>> thomas
+        double deltaX = mouseEvent.getSceneX() - initialDeltaX;
+        double deltaY = mouseEvent.getSceneY() - initialDeltaY;
+
+        // Met à jour la translation
+        perspective.setTranslation(deltaX, deltaY);
     }
 }
 
