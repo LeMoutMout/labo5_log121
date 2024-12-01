@@ -2,15 +2,17 @@ package com.example.labo5_log121.models;
 
 import com.example.labo5_log121.commands.Memento;
 
-public class PerspectiveModel extends Subject {
+import java.io.Serializable;
 
+public class PerspectiveModel extends Subject implements Serializable {
+    private static final long serialVersionUID = 1L;
     private double scaleFactor;
     private double translationX;
     private double translationY;
-    private ImageModel image;
+    private final ImageModel image;
 
     public PerspectiveModel(ImageModel image) {
-        this.scaleFactor = 1.0; //a modif je pense
+        this.scaleFactor = 1;
         this.translationX = 0;
         this.translationY = 0;
         this.image = image;
@@ -20,11 +22,7 @@ public class PerspectiveModel extends Subject {
         return scaleFactor;
     }
 
-    public void setScaleFactor(double scaleFactor) {
-        this.scaleFactor = scaleFactor;
-    }
-
-    public double getTranslation() {
+    public double getTranslationX() {
         return translationX;
     }
 
@@ -32,9 +30,19 @@ public class PerspectiveModel extends Subject {
         return translationY;
     }
 
+    public ImageModel getImage() {
+        return image;
+    }
+
+    public void setScaleFactor(double scaleFactor) {
+        this.scaleFactor = scaleFactor;
+        notifyObservers();
+    }
+
     public void setTranslation(double translationX, double translationY) {
         this.translationX = translationX;
         this.translationY = translationY;
+        notifyObservers();
     }
 
     public Memento createMemento(){
@@ -45,9 +53,6 @@ public class PerspectiveModel extends Subject {
         scaleFactor = memento.getScaleFactor();
         translationX = memento.getTranslationX();
         translationY = memento.getTranslationY();
-    }
-
-    private void updateScaleInModel(double scale) {
-        this.setScaleFactor(scale);
+        notifyObservers();
     }
 }
