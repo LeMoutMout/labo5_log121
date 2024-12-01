@@ -5,6 +5,8 @@ import com.example.labo5_log121.models.PerspectiveModel;
 import com.example.labo5_log121.views.MainView;
 import com.example.labo5_log121.views.PerspectiveView;
 import com.example.labo5_log121.views.ThumbnailView;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.FileChooser;
@@ -29,31 +31,53 @@ public class MainController {
         // Gestion des événements du menu
 
         // Menu "Nouveau" pour charger une image
-        mainView.getMenuBar().getMenus().get(0).getItems().get(0).setOnAction(event -> openImage());
-
-        // Menu "Nouvelle perspective"
-        mainView.getMenuBar().getMenus().get(1).getItems().get(0).setOnAction(event -> createNewPerspective());
-
-        // Menu "Sauvegarder"
-        mainView.getMenuBar().getMenus().get(0).getItems().get(2).setOnAction(event -> saveState());
+        MenuItem newProjectMenuItem = mainView.getNewProjectMenuItem();
+        newProjectMenuItem.setOnAction(event -> openImage());
 
         // Menu "Ouvrir"
-        mainView.getMenuBar().getMenus().get(0).getItems().get(1).setOnAction(event -> openState());
+        MenuItem openPerspectiveMenuItem = mainView.getOpenPerspectiveMenuItem();
+        openPerspectiveMenuItem.setOnAction(event -> openState());
+
+        // Menu "Sauvegarder"
+        MenuItem saveMenuItem = mainView.getSaveMenuItem();
+        saveMenuItem.setOnAction(event -> saveState());
+
+        // Menu "Fermer tout"
+        MenuItem closeMenuItem = mainView.getCloseMenuItem();
+        closeMenuItem.setOnAction(event -> closeTab());
+
+        // Menu "Quitter"
+        MenuItem exit = mainView.getExitMenuItem();
+        exit.setOnAction(event -> System.exit(0));
+
+        // Menu "Nouvelle perspective"
+        MenuItem newPerspectiveMenuItem = mainView.getNewPerspectiveMenuItem();
+        newPerspectiveMenuItem.setOnAction(event -> createNewPerspective());
     }
 
     // Méthode pour ouvrir une image et l'afficher dans un onglet Thumbnail
     private void openImage() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Sélectionner une image");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg"));
-        File file = fileChooser.showOpenDialog(new Stage());
+        if(mainView.getTabPane().getTabs().isEmpty()){
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Sélectionner une image");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg"));
+            File file = fileChooser.showOpenDialog(new Stage());
 
-        if (file != null) {
-            lastLoadedImagePath = file.getAbsolutePath();
-            addThumbnailTab(lastLoadedImagePath); // Ajouter l'onglet d'image statique
-            ImageModel imageModel = new ImageModel(lastLoadedImagePath);
-            imageModel.setImagePath(lastLoadedImagePath);
-            lastLoadedImageModel = imageModel;
+            if (file != null) {
+                lastLoadedImagePath = file.getAbsolutePath();
+                addThumbnailTab(lastLoadedImagePath); // Ajouter l'onglet d'image statique
+                ImageModel imageModel = new ImageModel(lastLoadedImagePath);
+                imageModel.setImagePath(lastLoadedImagePath);
+                lastLoadedImageModel = imageModel;
+                MenuItem newPerspectiveMenuItem = mainView.getNewPerspectiveMenuItem();
+                MenuItem saveMenuItem = mainView.getSaveMenuItem();
+                MenuItem closeMenuItem = mainView.getCloseMenuItem();
+                newPerspectiveMenuItem.setDisable(false);
+                saveMenuItem.setDisable(false);
+                closeMenuItem.setDisable(false);
+            }
+        } else {
+            // à faire
         }
     }
 
@@ -78,6 +102,7 @@ public class MainController {
             perspectiveTab.setClosable(true); // L'onglet peut être fermé
             perspectiveTab.setContent(perspectiveView);
             tabPane.getTabs().add(perspectiveTab);
+            tabPane.getSelectionModel().select(perspectiveTab);
         }
     }
 
@@ -144,5 +169,9 @@ public class MainController {
             tab.setContent(view);
             mainView.getTabPane().getTabs().add(tab);
         }
+    }
+
+    private void closeTab() {
+        mainView.getTabPane().getTabs().clear();
     }
 }

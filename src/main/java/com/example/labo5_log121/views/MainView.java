@@ -6,21 +6,42 @@ import javafx.scene.layout.BorderPane;
 public class MainView extends BorderPane {
     private final MenuBar menuBar;
     private final TabPane tabPane;
+    private final MenuItem newProjectMenuItem;
+    private final MenuItem openPerspectiveMenuItem;
+    private final MenuItem saveMenuItem;
+    private final MenuItem closeMenuItem;
+    private final MenuItem newPerspectiveMenuItem;
+    private final MenuItem exitMenuItem;
+
 
     public MainView() {
         menuBar = new MenuBar();
 
         Menu fileMenu = new Menu("Fichier");
+
+        newProjectMenuItem = new MenuItem("Nouveau");
+        openPerspectiveMenuItem = new MenuItem("Ouvrir");
+        saveMenuItem = new MenuItem("Sauvegarder");
+        saveMenuItem.setDisable(true);
+        closeMenuItem = new MenuItem("Fermer tout");
+        closeMenuItem.setDisable(true);
+        exitMenuItem = new MenuItem("Quitter");
+
+
         fileMenu.getItems().addAll(
-                new MenuItem("Nouveau"),
-                new MenuItem("Ouvrir"),
-                new MenuItem("Sauvegarder"),
-                new MenuItem("Fermer tout"),
-                new MenuItem("Quitter")
+                newProjectMenuItem,
+                openPerspectiveMenuItem,
+                saveMenuItem,
+                closeMenuItem,
+                exitMenuItem
         );
 
         Menu perspectiveMenu = new Menu("Perspective");
-        perspectiveMenu.getItems().add(new MenuItem("Nouvelle perspective"));
+
+        newPerspectiveMenuItem = new MenuItem("Nouvelle perspective");
+        newPerspectiveMenuItem.setDisable(true);
+
+        perspectiveMenu.getItems().add(newPerspectiveMenuItem);
 
         Menu helpMenu = new Menu("Aide");
 
@@ -36,5 +57,23 @@ public class MainView extends BorderPane {
     }
     public MenuBar getMenuBar() {
         return menuBar;
+    }
+    public MenuItem getNewProjectMenuItem() {
+        return newProjectMenuItem;
+    }
+    public MenuItem getOpenPerspectiveMenuItem() {
+        return openPerspectiveMenuItem;
+    }
+    public MenuItem getExitMenuItem() {
+        return exitMenuItem;
+    }
+    public MenuItem getSaveMenuItem() {
+        return saveMenuItem;
+    }
+    public MenuItem getCloseMenuItem() {
+        return closeMenuItem;
+    }
+    public MenuItem getNewPerspectiveMenuItem() {
+        return newPerspectiveMenuItem;
     }
 }
