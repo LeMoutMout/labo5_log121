@@ -16,9 +16,8 @@ public class TranslationAction extends AbstractAction {
 
     @Override
     public void actionPerformed(Event event) {
-        if (!(event instanceof MouseEvent)) {
-            return;
-        }
+        // Sauvegarder l'état après modification
+        CommandManager.getInstance().add(perspective, perspective.createMemento());
 
         MouseEvent mouseEvent = (MouseEvent) event;
 
@@ -31,12 +30,6 @@ public class TranslationAction extends AbstractAction {
                 perspective.getTranslationX() + deltaX,
                 perspective.getTranslationY() + deltaY
         );
-
-        // Sauvegarder l'état après modification
-        CommandManager.getInstance().add(perspective, perspective.createMemento());
-
-        System.out.println("Nouvelle translation : X=" + perspective.getTranslationX() + ", Y=" + perspective.getTranslationY());
     }
-
 }
 
