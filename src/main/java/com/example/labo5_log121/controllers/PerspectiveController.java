@@ -1,8 +1,6 @@
 package com.example.labo5_log121.controllers;
 
-import com.example.labo5_log121.commands.CommandManager;
-import com.example.labo5_log121.commands.ScaleAction;
-import com.example.labo5_log121.commands.TranslationAction;
+import com.example.labo5_log121.commands.*;
 import com.example.labo5_log121.models.ImageModel;
 import com.example.labo5_log121.models.PerspectiveModel;
 import com.example.labo5_log121.views.PerspectiveView;
@@ -47,12 +45,14 @@ public class PerspectiveController {
 
         // Clique sur le bouton undo
         undoButton.setOnMouseClicked(event -> {
-            CommandManager.getInstance().undo(perspectiveModel);
+            UndoAction undoAction = new UndoAction(perspectiveModel);
+            undoAction.actionPerformed(event);
         });
 
         // Clique sur le bouton redo
         redoButton.setOnMouseClicked(event -> {
-            CommandManager.getInstance().redo(perspectiveModel);
+            RedoAction redoAction = new RedoAction(perspectiveModel);
+            redoAction.actionPerformed(event);
         });
 
         //gestion des translations avec la souris

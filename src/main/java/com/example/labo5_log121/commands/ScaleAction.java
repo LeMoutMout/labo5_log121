@@ -40,8 +40,7 @@ public class ScaleAction extends AbstractAction {
             newZoom = manualZoomFactor;
         }
 
-
-        // Met à jour le facteur de zoom
         perspective.setScaleFactor(newZoom);
+        perspective.setUndoButtonDisabled(false);
     }
 }

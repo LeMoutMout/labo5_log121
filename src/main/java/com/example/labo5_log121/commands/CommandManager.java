@@ -44,6 +44,16 @@ public class CommandManager {
         getUndoStack(perspectiveModel).push(memento);
     }
 
+    public boolean isEmptyUndoStack(PerspectiveModel perspectiveModel){
+        Stack<Memento> undoStack = getUndoStack(perspectiveModel);
+        return undoStack.isEmpty();
+    }
+
+    public boolean isEmptyRedoStack(PerspectiveModel perspectiveModel){
+        Stack<Memento> redoStack = getRedoStack(perspectiveModel);
+        return redoStack.isEmpty();
+    }
+
     private Stack<Memento> getUndoStack(PerspectiveModel perspectiveModel) {
         return undoStackMap.computeIfAbsent(perspectiveModel, k -> new Stack<>());
     }

@@ -6,15 +6,14 @@ import java.io.Serializable;
 
 public class PerspectiveModel extends Subject implements Serializable {
     private static final long serialVersionUID = 1L;
-    private double scaleFactor;
-    private double translationX;
-    private double translationY;
+    private double scaleFactor = 1.0;
+    private double translationX = 0.0;
+    private double translationY = 0.0;
+    private boolean isUndoDisabled = true;
+    private boolean isRedoDisabled = true;
     private final ImageModel image;
 
     public PerspectiveModel(ImageModel image) {
-        this.scaleFactor = 1;
-        this.translationX = 0;
-        this.translationY = 0;
         this.image = image;
     }
 
@@ -30,6 +29,14 @@ public class PerspectiveModel extends Subject implements Serializable {
         return translationY;
     }
 
+    public boolean isUndoDisabled() {
+        return isUndoDisabled;
+    }
+
+    public boolean isRedoDisabled() {
+        return isRedoDisabled;
+    }
+
     public ImageModel getImage() {
         return image;
     }
@@ -42,6 +49,16 @@ public class PerspectiveModel extends Subject implements Serializable {
     public void setTranslation(double translationX, double translationY) {
         this.translationX = translationX;
         this.translationY = translationY;
+        notifyObservers();
+    }
+
+    public void setUndoButtonDisabled(boolean disabled) {
+        this.isUndoDisabled = disabled;
+        notifyObservers();
+    }
+
+    public void setRedoButtonDisabled(boolean disabled) {
+        this.isRedoDisabled = disabled;
         notifyObservers();
     }
 

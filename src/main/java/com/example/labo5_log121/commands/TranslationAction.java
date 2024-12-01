@@ -24,8 +24,8 @@ public class TranslationAction extends AbstractAction {
         double deltaX = mouseEvent.getSceneX() - initialDeltaX;
         double deltaY = mouseEvent.getSceneY() - initialDeltaY;
 
-        // Met à jour la translation
         perspective.setTranslation(deltaX, deltaY);
+        perspective.setUndoButtonDisabled(false);
     }
 }
 

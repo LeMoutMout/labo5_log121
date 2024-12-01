@@ -12,6 +12,8 @@ import javafx.scene.control.ScrollPane;
 public class PerspectiveView extends Pane implements Observer {
     private final ImageView imageView;
     private final Slider zoomSlider;
+    private final Button undoButton;
+    private final Button redoButton;
     private final HBox bottomBar;
     private transient Subject lastSubject;
 
@@ -32,13 +34,19 @@ public class PerspectiveView extends Pane implements Observer {
         zoomSlider = new Slider(10, 500, 100);
         zoomSlider.setBlockIncrement(10);
 
+        undoButton = new Button("Undo");
+        undoButton.setDisable(true);
+
+        redoButton = new Button("Redo");
+        redoButton.setDisable(true);
+
         // Ajouter les autres éléments à la bottomBar
         bottomBar.getChildren().addAll(
                 new Label("x = 0 ; y = 0"),
                 new Button("Copier"),
                 new Button("Coller"),
-                new Button("Undo"),
-                new Button("Redo"),
+                undoButton,
+                redoButton,
                 new Label("Zoom:"),
                 zoomSlider
         );
@@ -68,6 +76,8 @@ public class PerspectiveView extends Pane implements Observer {
         imageView.setTranslateX(perspectiveModel.getTranslationX());
         imageView.setTranslateY(perspectiveModel.getTranslationY());
         zoomSlider.setValue(perspectiveModel.getScaleFactor()*100);
+        undoButton.setDisable(perspectiveModel.isUndoDisabled());
+        redoButton.setDisable(perspectiveModel.isRedoDisabled());
         this.lastSubject = perspectiveModel;
     }
 
