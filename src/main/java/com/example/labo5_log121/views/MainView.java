@@ -55,10 +55,4 @@ public class MainView extends BorderPane {
     public MenuBar getMenuBar() {
         return menuBar;
     }
-    public void showBottomBar(boolean show) {
-        bottomBar.setVisible(show);
-    }
-    public Slider getZoomSlider() {
-        return zoomSlider;
-    }
 }

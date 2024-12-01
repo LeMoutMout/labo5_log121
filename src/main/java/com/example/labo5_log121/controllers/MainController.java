@@ -1,11 +1,14 @@
 package com.example.labo5_log121.controllers;
 
+import com.example.labo5_log121.commands.ScaleAction;
 import com.example.labo5_log121.models.ImageModel;
 import com.example.labo5_log121.views.MainView;
 import com.example.labo5_log121.views.PerspectiveView;
 import com.example.labo5_log121.views.ThumbnailView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -62,6 +65,7 @@ public class MainController {
     private void createNewPerspective() {
         if (!lastLoadedImagePath.isEmpty() && lastLoadedImageModel != null) {
             PerspectiveView perspectiveView = new PerspectiveView(lastLoadedImagePath);
+            new PerspectiveController(perspectiveView, lastLoadedImageModel);
             TabPane tabPane = mainView.getTabPane();
             Tab perspectiveTab = new Tab("Perspective");
             perspectiveTab.setClosable(true); // L'onglet peut être fermé

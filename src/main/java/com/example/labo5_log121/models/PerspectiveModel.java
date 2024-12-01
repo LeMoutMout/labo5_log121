@@ -10,7 +10,7 @@ public class PerspectiveModel extends Subject {
     private final ImageModel image;
 
     public PerspectiveModel(ImageModel image) {
-        this.scaleFactor = 5;
+        this.scaleFactor = 1;
         this.translationX = 0;
         this.translationY = 0;
         this.image = image;

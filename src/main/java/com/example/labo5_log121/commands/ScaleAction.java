@@ -4,35 +4,48 @@ import com.example.labo5_log121.models.PerspectiveModel;
 import com.example.labo5_log121.views.PerspectiveView;
 import javafx.event.Event;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.input.ScrollEvent;
 
 public class ScaleAction extends AbstractAction {
 
+    private final Double manualZoomFactor;
+
+    // Constructeur pour l'utilisation avec la molette de souris
     public ScaleAction(PerspectiveModel perspective) {
         super(perspective);
+        this.manualZoomFactor = null;  // Aucun zoom manuel, ce sera calculé via l'événement
+    }
+
+    // Constructeur pour l'utilisation avec le slider
+    public ScaleAction(PerspectiveModel perspective, double manualZoomFactor) {
+        super(perspective);
+        this.manualZoomFactor = manualZoomFactor;  // Facteur de zoom manuel
     }
 
     @Override
     public void actionPerformed(Event event) {
+
+        // Sauvegarde de l'état actuel dans le Memento
         CommandManager.getInstance().add(perspective.createMemento());
-        Object source = event.getSource();
 
-        if (source instanceof Node) {
-            Node sourceNode = (Node) source;
-            PerspectiveView view = (PerspectiveView) sourceNode.getScene().getRoot();
+        double newZoom;
 
+        double zoomMin = 0.1;
+        double zoomMax = 5.0;
+
+        if(event instanceof ScrollEvent) {
             ScrollEvent scrollEvent = (ScrollEvent) event;
             double delta = scrollEvent.getDeltaY();
             double currentZoom = perspective.getScaleFactor();
-            double newZoom = currentZoom + delta / 10;
-
-            newZoom = Math.max(view.getZoomSlider().getMin(), Math.min(view.getZoomSlider().getMax(), newZoom));
-
-            double zoomFactor = newZoom / 100.0;
-
-            System.out.println(zoomFactor);
-
-            perspective.setScaleFactor(zoomFactor);
+            newZoom = currentZoom + delta / 100;
+            newZoom = Math.max(0.1, Math.min(5.0, newZoom));
+        } else {
+            newZoom = manualZoomFactor;
         }
+
+
+        // Met à jour le facteur de zoom
+        perspective.setScaleFactor(newZoom);
     }
 }
