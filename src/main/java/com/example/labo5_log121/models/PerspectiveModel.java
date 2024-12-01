@@ -2,8 +2,10 @@ package com.example.labo5_log121.models;
 
 import com.example.labo5_log121.commands.Memento;
 
-public class PerspectiveModel extends Subject {
+import java.io.Serializable;
 
+public class PerspectiveModel extends Subject implements Serializable {
+    private static final long serialVersionUID = 1L;
     private double scaleFactor;
     private double translationX;
     private double translationY;

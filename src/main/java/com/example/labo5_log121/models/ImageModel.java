@@ -1,6 +1,9 @@
 package com.example.labo5_log121.models;
 
-public class ImageModel {
+import java.io.Serializable;
+
+public class ImageModel implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String imagePath;
 
     public ImageModel(String imagePath) {

@@ -2,17 +2,26 @@ package com.example.labo5_log121.views;
 
 import com.example.labo5_log121.models.PerspectiveModel;
 import com.example.labo5_log121.models.Subject;
+<<<<<<< HEAD
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+=======
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+>>>>>>> momo
 import javafx.scene.control.ScrollPane;
 
 public class PerspectiveView extends Pane implements Observer {
     private final ImageView imageView;
     private final Slider zoomSlider;
     private final HBox bottomBar;
+    private transient Subject lastSubject;
 
     public PerspectiveView(String imagePath) {
         // Crée l'ImageView pour l'image
@@ -91,4 +100,22 @@ public class PerspectiveView extends Pane implements Observer {
             System.out.println("Mise à jour ignorée : Sujet non reconnu.");
         }
     }*/
+=======
+
+    public Subject getLastSubject() {
+        return lastSubject; // Récupéré via update() dans Observer
+    }
+
+    @Override
+    public void update(Subject subject) {
+        PerspectiveModel perspectiveModel = (PerspectiveModel) subject;
+        imageView.setScaleY(perspectiveModel.getScaleFactor());
+        imageView.setScaleX(perspectiveModel.getScaleFactor());
+        imageView.setLayoutX(perspectiveModel.getTranslationX());
+        imageView.setLayoutY(perspectiveModel.getTranslationY());
+        zoomSlider.setValue(perspectiveModel.getScaleFactor()*100);
+        this.lastSubject = perspectiveModel;
+
+    }
+>>>>>>> momo
 }
