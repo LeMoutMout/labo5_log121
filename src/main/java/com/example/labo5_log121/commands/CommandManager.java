@@ -1,16 +1,19 @@
 package com.example.labo5_log121.commands;
 
 import com.example.labo5_log121.models.PerspectiveModel;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 public class CommandManager {
     private static final CommandManager commandManagerInstance = new CommandManager();
-    private final Stack<Memento> redoStack;
-    private final Stack<Memento> undoStack;
+    private final Map<PerspectiveModel, Stack<Memento>> redoStackMap;
+    private final Map<PerspectiveModel, Stack<Memento>> undoStackMap;
 
     private CommandManager(){
-        undoStack = new Stack<>();
-        redoStack = new Stack<>();
+        undoStackMap = new HashMap<>();
+        redoStackMap = new HashMap<>();
     }
 
     public static CommandManager getInstance(){
@@ -18,18 +21,32 @@ public class CommandManager {
     }
 
     public void undo(PerspectiveModel perspectiveModel){
-        Memento memento = undoStack.pop();
-        perspectiveModel.restore(memento);
-        redoStack.push(memento);
+        Stack<Memento> undoStack = getUndoStack(perspectiveModel);
+        if(!undoStack.isEmpty()){
+            Memento memento = undoStack.pop();
+            perspectiveModel.restore(memento);
+            getRedoStack(perspectiveModel).push(memento);
+        }
     }
 
     public void redo(PerspectiveModel perspectiveModel){
-        Memento memento = redoStack.pop();
-        perspectiveModel.restore(memento);
-        undoStack.push(memento);
+        Stack<Memento> redoStack = getRedoStack(perspectiveModel);
+        if(!redoStack.isEmpty()){
+            Memento memento = redoStack.pop();
+            perspectiveModel.restore(memento);
+            getUndoStack(perspectiveModel).push(memento);
+        }
     }
 
-    public void add(Memento memento){
-        undoStack.add(memento);
+    public void add(PerspectiveModel perspectiveModel, Memento memento){
+        getUndoStack(perspectiveModel).push(memento);
+    }
+
+    private Stack<Memento> getUndoStack(PerspectiveModel perspectiveModel) {
+        return undoStackMap.computeIfAbsent(perspectiveModel, k -> new Stack<>());
+    }
+
+    private Stack<Memento> getRedoStack(PerspectiveModel perspectiveModel) {
+        return redoStackMap.computeIfAbsent(perspectiveModel, k -> new Stack<>());
     }
 }

@@ -6,10 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.control.ScrollPane;
 
 public class PerspectiveView extends Pane implements Observer {
@@ -56,13 +53,7 @@ public class PerspectiveView extends Pane implements Observer {
         this.getChildren().add(layout);
     }
 
-    public void showBottomBar(boolean show) {
-        bottomBar.setVisible(show);
-    }
-
-    public Slider getZoomSlider() {
-        return zoomSlider;
-    }
+    public HBox getBottomBar(){return bottomBar;}
 
     @Override
     public void update(Subject subject) {

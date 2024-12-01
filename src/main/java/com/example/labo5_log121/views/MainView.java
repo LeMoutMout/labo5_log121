@@ -2,13 +2,10 @@ package com.example.labo5_log121.views;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 
 public class MainView extends BorderPane {
     private final MenuBar menuBar;
     private final TabPane tabPane;
-    private final Slider zoomSlider;
-    private final HBox bottomBar;
 
     public MainView() {
         menuBar = new MenuBar();
@@ -32,21 +29,6 @@ public class MainView extends BorderPane {
 
         tabPane = new TabPane();
         setCenter(tabPane);
-
-        zoomSlider = new Slider(50, 200, 100);
-        bottomBar = new HBox(10);
-        bottomBar.getChildren().addAll(
-                new Label("x = 0 ; y = 0"),
-                new Button("Copier"),
-                new Button("Coller"),
-                new Button("Undo"),
-                new Button("Redo"),
-                new Label("Zoom:"),
-                zoomSlider
-        );
-
-        setBottom(bottomBar);
-        bottomBar.setVisible(false);
     }
 
     public TabPane getTabPane() {

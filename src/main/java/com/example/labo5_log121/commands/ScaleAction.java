@@ -27,7 +27,7 @@ public class ScaleAction extends AbstractAction {
     public void actionPerformed(Event event) {
 
         // Sauvegarde de l'état actuel dans le Memento
-        CommandManager.getInstance().add(perspective.createMemento());
+        CommandManager.getInstance().add(perspective,perspective.createMemento());
 
         double newZoom;
 
