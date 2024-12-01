@@ -48,11 +48,15 @@ public class PerspectiveModel extends Subject {
     public void setTranslation(double translationX, double translationY) {
         this.translationX = translationX;
         this.translationY = translationY;
+<<<<<<< HEAD
+=======
+        System.out.println("Translation mise à jour : X=" + translationX + ", Y=" + translationY);
+>>>>>>> thomas
         notifyObservers();
     }
 
     public Memento createMemento(){
-        return new Memento(scaleFactor, translationX, translationY);
+        return new Memento(scaleFactor, translationX, translationY, this);
     }
 
     public void restore(Memento memento){
@@ -60,5 +64,12 @@ public class PerspectiveModel extends Subject {
         translationX = memento.getTranslationX();
         translationY = memento.getTranslationY();
         notifyObservers();
+<<<<<<< HEAD
+=======
+    }
+
+    private void updateScaleInModel(double scale) {
+        this.setScaleFactor(scale);
+>>>>>>> thomas
     }
 }

@@ -3,7 +3,10 @@ package com.example.labo5_log121.commands;
 import com.example.labo5_log121.models.PerspectiveModel;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+<<<<<<< HEAD
 import javafx.scene.input.ScrollEvent;
+=======
+>>>>>>> thomas
 
 public class TranslationAction extends AbstractAction {
     private final double deltaX;
@@ -17,6 +20,7 @@ public class TranslationAction extends AbstractAction {
 
     @Override
     public void actionPerformed(Event event) {
+<<<<<<< HEAD
         //perspective.setTranslation(event. , event.);
 =======
         double newTranslationX = perspective.getTranslationX() + deltaX;

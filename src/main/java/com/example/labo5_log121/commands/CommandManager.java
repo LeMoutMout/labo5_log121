@@ -22,6 +22,7 @@ public class CommandManager {
         return commandManagerInstance;
     }
 
+<<<<<<< HEAD
     public void undo(PerspectiveModel perspectiveModel){
         Stack<Memento> undoStack = getUndoStack(perspectiveModel);
         if(!undoStack.isEmpty()){

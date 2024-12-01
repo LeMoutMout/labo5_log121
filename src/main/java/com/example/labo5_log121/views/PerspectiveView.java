@@ -15,8 +15,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.control.ScrollPane;
 
+<<<<<<< HEAD
 public class PerspectiveView extends Pane implements Observer {
     private final ImageView imageView;
+=======
+public class PerspectiveView extends BorderPane implements Observer {
+    private final MenuBar menuBar;
+    private final TabPane tabPane;
+    private final Slider zoomSlider;
+    /*private final Label coordinatesLabel;
+
+    private final Button copyButton, pasteButton, undoButton, redoButton;*/
+>>>>>>> thomas
     private final HBox bottomBar;
     private final Slider zoomSlider;
 
@@ -70,4 +80,49 @@ public class PerspectiveView extends Pane implements Observer {
         imageView.setLayoutY(perspectiveModel.getTranslationY());
         zoomSlider.setValue(perspectiveModel.getScaleFactor()*100);
     }
+
+    public void enableDrag(ImageView imageView, PerspectiveModel model) {
+        final double[] initialX = {0};
+        final double[] initialY = {0};
+
+        imageView.setOnMousePressed(event -> {
+            initialX[0] = event.getSceneX() - model.getTranslationX();
+            initialY[0] = event.getSceneY() - model.getTranslationY();
+        });
+
+        imageView.setOnMouseDragged(event -> {
+            double deltaX = event.getSceneX() - initialX[0];
+            double deltaY = event.getSceneY() - initialY[0];
+
+            model.setTranslation(deltaX, deltaY);
+        });
+    }
+
+    @Override
+    public void update(Subject subject) {
+        if (subject instanceof PerspectiveModel) {
+            PerspectiveModel model = (PerspectiveModel) subject;
+            System.out.println("Vue mise à jour : Translation X=" + model.getTranslationX() + ", Y=" + model.getTranslationY());
+
+            Tab selectedTab = getTabPane().getSelectionModel().getSelectedItem();
+            if (selectedTab != null && selectedTab.getContent() instanceof Pane) {
+                Pane pane = (Pane) selectedTab.getContent();
+                if (!pane.getChildren().isEmpty() && pane.getChildren().get(0) instanceof ImageView) {
+                    ImageView imageView = (ImageView) pane.getChildren().get(0);
+
+                    // Applique la translation
+                    imageView.setTranslateX(model.getTranslationX());
+                    imageView.setTranslateY(model.getTranslationY());
+                } else {
+                    System.out.println("Aucun ImageView trouvé dans l'onglet sélectionné.");
+                }
+            } else {
+                System.out.println("Aucun onglet valide sélectionné.");
+            }
+        } else {
+            System.out.println("Mise à jour ignorée : Sujet non reconnu.");
+        }
+    }
+
+
 }

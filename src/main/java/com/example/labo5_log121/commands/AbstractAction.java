@@ -8,7 +8,6 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 
 public abstract class AbstractAction {
-
     protected final PerspectiveModel perspective;
 
     public AbstractAction(PerspectiveModel perspective) {
