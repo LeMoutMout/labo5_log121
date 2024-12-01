@@ -49,6 +49,7 @@ public class PerspectiveModel extends Subject implements Serializable {
     public void setTranslation(double translationX, double translationY) {
         this.translationX = translationX;
         this.translationY = translationY;
+        System.out.println("Translation mise à jour : X=" + translationX + ", Y=" + translationY);
         notifyObservers();
     }
 

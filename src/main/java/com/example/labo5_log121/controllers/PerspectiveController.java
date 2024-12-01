@@ -55,19 +55,27 @@ public class PerspectiveController {
             redoAction.actionPerformed(event);
         });
 
-        //gestion des translations avec la souris
-        view.getImageView().setOnMouseClicked(event -> {
+        view.getImageView().setOnMousePressed(event -> {
             initialMouseX = event.getSceneX();
             initialMouseY = event.getSceneY();
         });
 
         view.getImageView().setOnMouseDragged(event -> {
+            // Calculer et appliquer la translation
             TranslationAction translationAction = new TranslationAction(perspectiveModel, initialMouseX, initialMouseY);
             translationAction.actionPerformed(event);
 
-            /*initialMouseX = event.getSceneX();
-            initialMouseY = event.getSceneY();*/
+            // Mettre à jour les coordonnées initiales
+            initialMouseX = event.getSceneX();
+            initialMouseY = event.getSceneY();
         });
+
+        view.getImageView().setOnMouseReleased(event -> {
+            // Sauvegarder l'état final après la translation
+            CommandManager.getInstance().add(perspectiveModel, perspectiveModel.createMemento());
+        });
+
+
     }
 }
 

@@ -42,6 +42,7 @@ public class CommandManager {
 
     public void add(PerspectiveModel perspectiveModel, Memento memento){
         getUndoStack(perspectiveModel).push(memento);
+        getRedoStack(perspectiveModel).clear();
     }
 
     public boolean isEmptyUndoStack(PerspectiveModel perspectiveModel){
