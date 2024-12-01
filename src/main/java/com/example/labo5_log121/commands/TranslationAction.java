@@ -30,6 +30,7 @@ public class TranslationAction extends AbstractAction {
                 perspective.getTranslationX() + deltaX,
                 perspective.getTranslationY() + deltaY
         );
+        perspective.setUndoButtonDisabled(false);
     }
 }
 
