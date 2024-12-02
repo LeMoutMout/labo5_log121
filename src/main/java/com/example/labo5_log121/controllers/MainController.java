@@ -64,27 +64,23 @@ public class MainController {
 
     // Méthode pour ouvrir une image et l'afficher dans un onglet Thumbnail
     private void openImage() {
-        if(mainView.getTabPane().getTabs().isEmpty()){
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Sélectionner une image");
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg"));
-            File file = fileChooser.showOpenDialog(new Stage());
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Sélectionner une image");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg"));
+        File file = fileChooser.showOpenDialog(new Stage());
 
-            if (file != null) {
-                lastLoadedImagePath = file.getAbsolutePath();
-                addThumbnailTab(lastLoadedImagePath); // Ajouter l'onglet d'image statique
-                ImageModel imageModel = new ImageModel(lastLoadedImagePath);
-                imageModel.setImagePath(lastLoadedImagePath);
-                lastLoadedImageModel = imageModel;
-                MenuItem newPerspectiveMenuItem = mainView.getNewPerspectiveMenuItem();
-                MenuItem saveMenuItem = mainView.getSaveMenuItem();
-                MenuItem closeMenuItem = mainView.getCloseMenuItem();
-                newPerspectiveMenuItem.setDisable(false);
-                saveMenuItem.setDisable(false);
-                closeMenuItem.setDisable(false);
-            }
-        } else {
-            // à faire
+        if (file != null) {
+            lastLoadedImagePath = file.getAbsolutePath();
+            addThumbnailTab(lastLoadedImagePath); // Ajouter l'onglet d'image statique
+            ImageModel imageModel = new ImageModel(lastLoadedImagePath);
+            imageModel.setImagePath(lastLoadedImagePath);
+            lastLoadedImageModel = imageModel;
+            MenuItem newPerspectiveMenuItem = mainView.getNewPerspectiveMenuItem();
+            MenuItem saveMenuItem = mainView.getSaveMenuItem();
+            MenuItem closeMenuItem = mainView.getCloseMenuItem();
+            newPerspectiveMenuItem.setDisable(false);
+            saveMenuItem.setDisable(false);
+            closeMenuItem.setDisable(false);
         }
     }
 
@@ -187,7 +183,6 @@ public class MainController {
     }
 
     private void restoreAllPerspectives(List<PerspectiveModel> perspectives) {
-        CommandManager commandManager = CommandManager.getInstance();
         perspectiveNumber = 1;
 
         for (PerspectiveModel model : perspectives) {
@@ -217,6 +212,9 @@ public class MainController {
 
     private void closeTab() {
         perspectiveNumber = 1;
+        mainView.getCloseMenuItem().setDisable(true);
+        mainView.getSaveMenuItem().setDisable(true);
+        mainView.getNewPerspectiveMenuItem().setDisable(true);
         mainView.getTabPane().getTabs().clear();
     }
 }

@@ -69,11 +69,6 @@ public class PerspectiveController {
             initialMouseX = event.getSceneX();
             initialMouseY = event.getSceneY();
         });
-
-        view.getImageView().setOnMouseReleased(event -> {
-            // Sauvegarder l'état final après la translation
-            CommandManager.getInstance().add(perspectiveModel, perspectiveModel.createMemento());
-        });
     }
 
     public void setPerspectiveModel(PerspectiveModel perspectiveModel) {
