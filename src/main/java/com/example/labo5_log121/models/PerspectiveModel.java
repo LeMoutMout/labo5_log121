@@ -6,14 +6,19 @@ import java.io.Serializable;
 
 public class PerspectiveModel extends Subject implements Serializable {
     private static final long serialVersionUID = 1L;
-    private double scaleFactor = 1.0;
-    private double translationX = 0.0;
-    private double translationY = 0.0;
-    private boolean isUndoDisabled = true;
-    private boolean isRedoDisabled = true;
+    private double scaleFactor;
+    private double translationX;
+    private double translationY;
+    private boolean isUndoDisabled;
+    private boolean isRedoDisabled;
     private final ImageModel image;
 
     public PerspectiveModel(ImageModel image) {
+        this.scaleFactor = 1.0;
+        this.translationX = 0.0;
+        this.translationY = 0.0;
+        this.isUndoDisabled = true;
+        this.isRedoDisabled = true;
         this.image = image;
     }
 
@@ -49,7 +54,6 @@ public class PerspectiveModel extends Subject implements Serializable {
     public void setTranslation(double translationX, double translationY) {
         this.translationX = translationX;
         this.translationY = translationY;
-        System.out.println("Translation mise à jour : X=" + translationX + ", Y=" + translationY);
         notifyObservers();
     }
 

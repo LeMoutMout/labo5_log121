@@ -1,10 +1,11 @@
 package com.example.labo5_log121.models;
 
+
 import java.io.Serializable;
 
 public class ImageModel implements Serializable {
-    private static final long serialVersionUID = 1L;
     private String imagePath;
+    private static final long serialVersionUID = 1L;
 
     public ImageModel(String imagePath) {
         this.imagePath = imagePath;
@@ -17,9 +18,4 @@ public class ImageModel implements Serializable {
     public String getImagePath() {
         return imagePath;
     }
-
-    public void save(){}
-
-    public void load(){}
 }
-

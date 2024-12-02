@@ -27,8 +27,6 @@ public class ScaleAction extends AbstractAction {
 
         double newZoom;
 
-        double zoomMin = 0.1;
-        double zoomMax = 5.0;
 
         if(event instanceof ScrollEvent) {
             ScrollEvent scrollEvent = (ScrollEvent) event;

@@ -15,4 +15,8 @@ public class ThumbnailView extends Pane {
         imageView.setFitHeight(600);
         getChildren().add(imageView);
     }
+
+    public ImageView getImageView() {
+        return imageView;
+    }
 }

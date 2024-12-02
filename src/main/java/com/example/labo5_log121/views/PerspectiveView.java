@@ -2,12 +2,9 @@ package com.example.labo5_log121.views;
 
 import com.example.labo5_log121.models.PerspectiveModel;
 import com.example.labo5_log121.models.Subject;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.ScrollPane;
 
 public class PerspectiveView extends Pane implements Observer {
     private final ImageView imageView;
@@ -15,6 +12,8 @@ public class PerspectiveView extends Pane implements Observer {
     private final Button undoButton;
     private final Button redoButton;
     private final HBox bottomBar;
+    private final Label coordX;
+    private final Label coordY;
     private transient Subject lastSubject;
 
     public PerspectiveView(String imagePath) {
@@ -31,8 +30,12 @@ public class PerspectiveView extends Pane implements Observer {
 
         // Création de la bottomBar
         bottomBar = new HBox(10);
-        zoomSlider = new Slider(10, 500, 100);
-        zoomSlider.setBlockIncrement(10);
+
+        coordX = new Label();
+        coordX.setText("0");
+
+        coordY = new Label();
+        coordY.setText("0");
 
         undoButton = new Button("Undo");
         undoButton.setDisable(true);
@@ -40,9 +43,15 @@ public class PerspectiveView extends Pane implements Observer {
         redoButton = new Button("Redo");
         redoButton.setDisable(true);
 
+        zoomSlider = new Slider(10, 500, 100);
+        zoomSlider.setBlockIncrement(10);
+
         // Ajouter les autres éléments à la bottomBar
         bottomBar.getChildren().addAll(
-                new Label("x = 0 ; y = 0"),
+                new Label("x : "),
+                coordX,
+                new Label("y : "),
+                coordY,
                 new Button("Copier"),
                 new Button("Coller"),
                 undoButton,
@@ -75,6 +84,8 @@ public class PerspectiveView extends Pane implements Observer {
         imageView.setScaleX(perspectiveModel.getScaleFactor());
         imageView.setTranslateX(perspectiveModel.getTranslationX());
         imageView.setTranslateY(perspectiveModel.getTranslationY());
+        coordX.setText(String.valueOf(perspectiveModel.getTranslationX()));
+        coordY.setText(String.valueOf(perspectiveModel.getTranslationY()));
         zoomSlider.setValue(perspectiveModel.getScaleFactor()*100);
         undoButton.setDisable(perspectiveModel.isUndoDisabled());
         redoButton.setDisable(perspectiveModel.isRedoDisabled());

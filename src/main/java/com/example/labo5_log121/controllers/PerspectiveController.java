@@ -10,7 +10,7 @@ import javafx.scene.layout.HBox;
 
 public class PerspectiveController {
     private final PerspectiveView view;
-    private final PerspectiveModel perspectiveModel;
+    private PerspectiveModel perspectiveModel;
     private double initialMouseX;
     private double initialMouseY;
 
@@ -26,9 +26,9 @@ public class PerspectiveController {
         HBox bottomBar = view.getBottomBar();
 
         //récupère les éléments de la bottomBar
-        Button undoButton = (Button) bottomBar.getChildren().get(3);
-        Button redoButton = (Button) bottomBar.getChildren().get(4);
-        Slider zoomSlider = (Slider) bottomBar.getChildren().get(6);
+        Button undoButton = (Button) bottomBar.getChildren().get(6);
+        Button redoButton = (Button) bottomBar.getChildren().get(7);
+        Slider zoomSlider = (Slider) bottomBar.getChildren().get(9);
 
         // Zoom via le slider
         zoomSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
@@ -74,8 +74,11 @@ public class PerspectiveController {
             // Sauvegarder l'état final après la translation
             CommandManager.getInstance().add(perspectiveModel, perspectiveModel.createMemento());
         });
+    }
 
-
+    public void setPerspectiveModel(PerspectiveModel perspectiveModel) {
+        this.perspectiveModel = perspectiveModel;
+        perspectiveModel.addObserver(view);
     }
 }
 

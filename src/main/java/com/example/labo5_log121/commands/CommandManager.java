@@ -62,4 +62,13 @@ public class CommandManager {
     private Stack<Memento> getRedoStack(PerspectiveModel perspectiveModel) {
         return redoStackMap.computeIfAbsent(perspectiveModel, k -> new Stack<>());
     }
+
+    public Map<PerspectiveModel, Stack<Memento>> getUndoStacks() {
+        return undoStackMap;
+    }
+
+    public void restoreUndoStacks(Map<PerspectiveModel, Stack<Memento>> undoStacks) {
+        this.undoStackMap.clear();
+        this.undoStackMap.putAll(undoStacks);
+    }
 }
