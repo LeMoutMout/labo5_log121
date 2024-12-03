@@ -84,7 +84,7 @@ public class MainModel extends Subject implements Serializable{
             this.uniqueIds.add(model.getUniqueId());
             new PerspectiveController(view, model);
             notifyObservers("addPerspectiveTab");
-            Memento lastMemento = CommandManager.getInstance().getUndoStacks().get(uniqueId).getLast();
+            Memento lastMemento = CommandManager.getInstance().getUndoStacks().get(uniqueId).get(CommandManager.getInstance().getUndoStacks().get(uniqueId).size() - 1);
             if(lastMemento != null) {
                 model.restore(lastMemento);
                 model.setUndoButtonDisabled(false);
