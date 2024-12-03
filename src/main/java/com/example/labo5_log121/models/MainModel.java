@@ -90,6 +90,7 @@ public class MainModel extends Subject {
 
     private void restoreThumbnail(String thumbnailPath) {
         this.thumbnailView = new ThumbnailView(thumbnailPath);
+        this.lastLoadedImagePath = thumbnailPath;
         notifyObservers("clearTab");
         notifyObservers("addThumbnailTab");
     }
