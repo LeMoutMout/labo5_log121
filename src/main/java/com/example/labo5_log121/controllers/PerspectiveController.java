@@ -25,6 +25,8 @@ public class PerspectiveController {
         HBox bottomBar = view.getBottomBar();
 
         //récupère les éléments de la bottomBar
+        Button copyButton = (Button) bottomBar.getChildren().get(4);
+        Button pasteButton = (Button) bottomBar.getChildren().get(5);
         Button undoButton = (Button) bottomBar.getChildren().get(6);
         Button redoButton = (Button) bottomBar.getChildren().get(7);
         Slider zoomSlider = (Slider) bottomBar.getChildren().get(9);
@@ -45,6 +47,19 @@ public class PerspectiveController {
         undoButton.setOnMouseClicked(event -> {
             UndoAction undoAction = new UndoAction(perspectiveModel);
             undoAction.actionPerformed(event);
+        });
+
+        // Clique sur le bouton copier
+        copyButton.setOnMouseClicked(event -> {
+            CopyAction copyAction = CopyAction.getInstance(perspectiveModel);
+            copyAction.updatePerspective(perspectiveModel);
+            copyAction.actionPerformed(event);
+        });
+
+        // Clique sur le bouton coller
+        pasteButton.setOnMouseClicked(event -> {
+           PasteAction pasteAction = new PasteAction(perspectiveModel);
+           pasteAction.actionPerformed(event);
         });
 
         // Clique sur le bouton redo

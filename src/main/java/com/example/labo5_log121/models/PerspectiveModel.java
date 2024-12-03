@@ -91,10 +91,4 @@ public class PerspectiveModel extends Subject implements Serializable {
         notifyObservers("scaleFactorChanged");
         notifyObservers("translationChanged");
     }
-
-    public void restorePerspective() {
-        notifyObservers("scaleFactorChanged");
-        notifyObservers("translationChanged");
-        notifyObservers("undoButtonStateChanged");
-    }
 }

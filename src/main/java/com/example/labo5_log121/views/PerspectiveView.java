@@ -32,10 +32,10 @@ public class PerspectiveView extends Pane implements Observer {
         bottomBar = new HBox(10);
 
         coordX = new Label();
-        coordX.setText("0");
+        coordX.setText("0.0");
 
         coordY = new Label();
-        coordY.setText("0");
+        coordY.setText("0.0");
 
         undoButton = new Button("Undo");
         undoButton.setDisable(true);
@@ -94,8 +94,8 @@ public class PerspectiveView extends Pane implements Observer {
                 case "translationChanged" :
                     imageView.setTranslateX(perspectiveModel.getTranslationX());
                     imageView.setTranslateY(perspectiveModel.getTranslationY());
-                    coordX.setText(String.valueOf(perspectiveModel.getTranslationX()));
-                    coordY.setText(String.valueOf(perspectiveModel.getTranslationY()));
+                    coordX.setText(String.format("%.3f", perspectiveModel.getTranslationX()));
+                    coordY.setText(String.format("%.3f", perspectiveModel.getTranslationY()));
                     break;
                 case "undoButtonStateChanged" :
                     undoButton.setDisable(perspectiveModel.isUndoDisabled());
