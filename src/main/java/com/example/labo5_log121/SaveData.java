@@ -3,22 +3,24 @@ package com.example.labo5_log121;
 import com.example.labo5_log121.commands.Memento;
 import com.example.labo5_log121.models.PerspectiveModel;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
 public class SaveData implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
-    private List<PerspectiveModel> perspectiveModels;
-    private List<String> thumbnailPaths;
-    private Map<PerspectiveModel, Stack<Memento>> undoStacks;
+    private final List<PerspectiveModel> perspectiveModels;
+    private final String thumbnailPath;
+    private final Map<PerspectiveModel, Stack<Memento>> undoStacks;
 
-    public SaveData(List<PerspectiveModel> perspectiveModels, List<String> thumbnailPaths,
+    public SaveData(List<PerspectiveModel> perspectiveModels, String thumbnailPath,
                     Map<PerspectiveModel, Stack<Memento>> undoStacks) {
         this.perspectiveModels = perspectiveModels;
-        this.thumbnailPaths = thumbnailPaths;
+        this.thumbnailPath = thumbnailPath;
         this.undoStacks = undoStacks;
     }
 
@@ -26,8 +28,8 @@ public class SaveData implements Serializable {
         return perspectiveModels;
     }
 
-    public List<String> getThumbnailPaths() {
-        return thumbnailPaths;
+    public String getThumbnailPath() {
+        return thumbnailPath;
     }
 
     public Map<PerspectiveModel, Stack<Memento>> getUndoStacks() {

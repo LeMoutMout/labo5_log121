@@ -14,7 +14,6 @@ public class PerspectiveView extends Pane implements Observer {
     private final HBox bottomBar;
     private final Label coordX;
     private final Label coordY;
-    private transient Subject lastSubject;
 
     public PerspectiveView(String imagePath) {
         // Crée l'ImageView pour l'image
@@ -71,24 +70,36 @@ public class PerspectiveView extends Pane implements Observer {
         this.getChildren().add(layout);
     }
 
-    public HBox getBottomBar(){return bottomBar;}
-    public ImageView getImageView(){return imageView;}
-    public Subject getLastSubject() {
-        return lastSubject; // Récupéré via update() dans Observer
+    public HBox getBottomBar() {
+        return bottomBar;
+    }
+    public ImageView getImageView() {
+        return imageView;
     }
 
     @Override
-    public void update(Subject subject) {
-        PerspectiveModel perspectiveModel = (PerspectiveModel) subject;
-        imageView.setScaleY(perspectiveModel.getScaleFactor());
-        imageView.setScaleX(perspectiveModel.getScaleFactor());
-        imageView.setTranslateX(perspectiveModel.getTranslationX());
-        imageView.setTranslateY(perspectiveModel.getTranslationY());
-        coordX.setText(String.valueOf(perspectiveModel.getTranslationX()));
-        coordY.setText(String.valueOf(perspectiveModel.getTranslationY()));
-        zoomSlider.setValue(perspectiveModel.getScaleFactor()*100);
-        undoButton.setDisable(perspectiveModel.isUndoDisabled());
-        redoButton.setDisable(perspectiveModel.isRedoDisabled());
-        this.lastSubject = perspectiveModel;
+    public void update(Subject subject, String message) {
+        if (subject instanceof PerspectiveModel) {
+            PerspectiveModel perspectiveModel = (PerspectiveModel) subject;
+            switch (message) {
+                case "scaleFactorChanged" :
+                    imageView.setScaleY(perspectiveModel.getScaleFactor());
+                    imageView.setScaleX(perspectiveModel.getScaleFactor());
+                    zoomSlider.setValue(perspectiveModel.getScaleFactor() * 100);
+                    break;
+                case "translationChanged" :
+                    imageView.setTranslateX(perspectiveModel.getTranslationX());
+                    imageView.setTranslateY(perspectiveModel.getTranslationY());
+                    coordX.setText(String.valueOf(perspectiveModel.getTranslationX()));
+                    coordY.setText(String.valueOf(perspectiveModel.getTranslationY()));
+                    break;
+                case "undoButtonStateChanged" :
+                    undoButton.setDisable(perspectiveModel.isUndoDisabled());
+                    break;
+                case "redoButtonStateChanged" :
+                    redoButton.setDisable(perspectiveModel.isRedoDisabled());
+                    break;
+            }
+        }
     }
 }

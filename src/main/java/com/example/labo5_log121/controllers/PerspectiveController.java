@@ -14,10 +14,10 @@ public class PerspectiveController {
     private double initialMouseX;
     private double initialMouseY;
 
-    public PerspectiveController(PerspectiveView view, ImageModel imageModel) {
+    public PerspectiveController(PerspectiveView view, PerspectiveModel perspectiveModel) {
         this.view = view;
-        perspectiveModel = new PerspectiveModel(imageModel);
-        perspectiveModel.addObserver(view);
+        this.perspectiveModel = perspectiveModel;
+        this.perspectiveModel.addObserver(view);
         initialize();
     }
 
@@ -69,11 +69,6 @@ public class PerspectiveController {
             initialMouseX = event.getSceneX();
             initialMouseY = event.getSceneY();
         });
-    }
-
-    public void setPerspectiveModel(PerspectiveModel perspectiveModel) {
-        this.perspectiveModel = perspectiveModel;
-        perspectiveModel.addObserver(view);
     }
 }
 

@@ -1,12 +1,14 @@
 package com.example.labo5_log121.commands;
 
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class Memento implements Serializable {
     private final double scaleFactor;
     private final double translationAxeY;
     private final double translationAxeX;
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public Memento(double scaleFactor, double translationAxeX, double translationAxeY) {

@@ -2,9 +2,11 @@ package com.example.labo5_log121.models;
 
 import com.example.labo5_log121.commands.Memento;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class PerspectiveModel extends Subject implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
     private double scaleFactor;
     private double translationX;
@@ -48,23 +50,23 @@ public class PerspectiveModel extends Subject implements Serializable {
 
     public void setScaleFactor(double scaleFactor) {
         this.scaleFactor = scaleFactor;
-        notifyObservers();
+        notifyObservers("scaleFactorChanged");
     }
 
     public void setTranslation(double translationX, double translationY) {
         this.translationX = translationX;
         this.translationY = translationY;
-        notifyObservers();
+        notifyObservers("translationChanged");
     }
 
     public void setUndoButtonDisabled(boolean disabled) {
         this.isUndoDisabled = disabled;
-        notifyObservers();
+        notifyObservers("undoButtonStateChanged");
     }
 
     public void setRedoButtonDisabled(boolean disabled) {
         this.isRedoDisabled = disabled;
-        notifyObservers();
+        notifyObservers("redoButtonStateChanged");
     }
 
     public Memento createMemento(){
@@ -75,6 +77,13 @@ public class PerspectiveModel extends Subject implements Serializable {
         scaleFactor = memento.getScaleFactor();
         translationX = memento.getTranslationX();
         translationY = memento.getTranslationY();
-        notifyObservers();
+        notifyObservers("scaleFactorChanged");
+        notifyObservers("translationChanged");
+    }
+
+    public void restorePerspective() {
+        notifyObservers("scaleFactorChanged");
+        notifyObservers("translationChanged");
+        notifyObservers("undoButtonStateChanged");
     }
 }
