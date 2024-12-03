@@ -12,10 +12,6 @@ public class ImageModel implements Serializable {
         this.imagePath = imagePath;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
     public String getImagePath() {
         return imagePath;
     }

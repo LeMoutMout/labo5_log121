@@ -10,8 +10,8 @@ import com.example.labo5_log121.commands.Memento;
 
 public class CommandManager {
     private static final CommandManager commandManagerInstance = new CommandManager();
-    private final Map<PerspectiveModel, Stack<Memento>> redoStackMap;
-    private final Map<PerspectiveModel, Stack<Memento>> undoStackMap;
+    private final Map<String, Stack<Memento>> redoStackMap;
+    private final Map<String, Stack<Memento>> undoStackMap;
 
     private CommandManager(){
         undoStackMap = new HashMap<>();
@@ -23,51 +23,51 @@ public class CommandManager {
     }
 
     public void undo(PerspectiveModel perspectiveModel){
-        Stack<Memento> undoStack = getUndoStack(perspectiveModel);
+        Stack<Memento> undoStack = getUndoStack(perspectiveModel.getUniqueId());
         if(!undoStack.isEmpty()){
             Memento memento = undoStack.pop();
             perspectiveModel.restore(memento);
-            getRedoStack(perspectiveModel).push(memento);
+            getRedoStack(perspectiveModel.getUniqueId()).push(memento);
         }
     }
 
     public void redo(PerspectiveModel perspectiveModel){
-        Stack<Memento> redoStack = getRedoStack(perspectiveModel);
+        Stack<Memento> redoStack = getRedoStack(perspectiveModel.getUniqueId());
         if(!redoStack.isEmpty()){
             Memento memento = redoStack.pop();
             perspectiveModel.restore(memento);
-            getUndoStack(perspectiveModel).push(memento);
+            getUndoStack(perspectiveModel.getUniqueId()).push(memento);
         }
     }
 
-    public void add(PerspectiveModel perspectiveModel, Memento memento){
-        getUndoStack(perspectiveModel).push(memento);
-        getRedoStack(perspectiveModel).clear();
+    public void add(String uniqueId, Memento memento){
+        getUndoStack(uniqueId).push(memento);
+        getRedoStack(uniqueId).clear();
     }
 
-    public boolean isEmptyUndoStack(PerspectiveModel perspectiveModel){
-        Stack<Memento> undoStack = getUndoStack(perspectiveModel);
+    public boolean isEmptyUndoStack(String uniqueId){
+        Stack<Memento> undoStack = getUndoStack(uniqueId);
         return undoStack.isEmpty();
     }
 
-    public boolean isEmptyRedoStack(PerspectiveModel perspectiveModel){
-        Stack<Memento> redoStack = getRedoStack(perspectiveModel);
+    public boolean isEmptyRedoStack(String uniqueID){
+        Stack<Memento> redoStack = getRedoStack(uniqueID);
         return redoStack.isEmpty();
     }
 
-    private Stack<Memento> getUndoStack(PerspectiveModel perspectiveModel) {
-        return undoStackMap.computeIfAbsent(perspectiveModel, k -> new Stack<>());
+    private Stack<Memento> getUndoStack(String uniqueId) {
+        return undoStackMap.computeIfAbsent(uniqueId, k -> new Stack<>());
     }
 
-    private Stack<Memento> getRedoStack(PerspectiveModel perspectiveModel) {
-        return redoStackMap.computeIfAbsent(perspectiveModel, k -> new Stack<>());
+    private Stack<Memento> getRedoStack(String uniqueId) {
+        return redoStackMap.computeIfAbsent(uniqueId, k -> new Stack<>());
     }
 
-    public Map<PerspectiveModel, Stack<Memento>> getUndoStacks() {
+    public Map<String, Stack<Memento>> getUndoStacks() {
         return undoStackMap;
     }
 
-    public void restoreUndoStacks(Map<PerspectiveModel, Stack<Memento>> undoStacks) {
+    public void restoreUndoStacks(Map<String, Stack<Memento>> undoStacks) {
         this.undoStackMap.clear();
         this.undoStackMap.putAll(undoStacks);
     }

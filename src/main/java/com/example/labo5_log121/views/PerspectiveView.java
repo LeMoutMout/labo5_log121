@@ -14,6 +14,7 @@ public class PerspectiveView extends Pane implements Observer {
     private final HBox bottomBar;
     private final Label coordX;
     private final Label coordY;
+    private final Label scaleFactor;
 
     public PerspectiveView(String imagePath) {
         // Crée l'ImageView pour l'image
@@ -45,6 +46,8 @@ public class PerspectiveView extends Pane implements Observer {
         zoomSlider = new Slider(10, 500, 100);
         zoomSlider.setBlockIncrement(10);
 
+        scaleFactor = new Label("100%");
+
         // Ajouter les autres éléments à la bottomBar
         bottomBar.getChildren().addAll(
                 new Label("x : "),
@@ -56,7 +59,8 @@ public class PerspectiveView extends Pane implements Observer {
                 undoButton,
                 redoButton,
                 new Label("Zoom:"),
-                zoomSlider
+                zoomSlider,
+                scaleFactor
         );
 
         // Ajouter l'image (avec le ScrollPane) et la bottomBar dans une VBox
@@ -86,6 +90,7 @@ public class PerspectiveView extends Pane implements Observer {
                     imageView.setScaleY(perspectiveModel.getScaleFactor());
                     imageView.setScaleX(perspectiveModel.getScaleFactor());
                     zoomSlider.setValue(perspectiveModel.getScaleFactor() * 100);
+                    scaleFactor.setText(perspectiveModel.getScaleFactor() * 100 + "%");
                     break;
                 case "translationChanged" :
                     imageView.setTranslateX(perspectiveModel.getTranslationX());

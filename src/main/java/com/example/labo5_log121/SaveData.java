@@ -13,26 +13,26 @@ public class SaveData implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private final List<PerspectiveModel> perspectiveModels;
+    private final List<String> uniqueIds;
     private final String thumbnailPath;
-    private final Map<PerspectiveModel, Stack<Memento>> undoStacks;
+    private final Map<String, Stack<Memento>> undoStacks;
 
-    public SaveData(List<PerspectiveModel> perspectiveModels, String thumbnailPath,
-                    Map<PerspectiveModel, Stack<Memento>> undoStacks) {
-        this.perspectiveModels = perspectiveModels;
+    public SaveData(List<String> uniqueIds, String thumbnailPath,
+                    Map<String, Stack<Memento>> undoStacks) {
+        this.uniqueIds = uniqueIds;
         this.thumbnailPath = thumbnailPath;
         this.undoStacks = undoStacks;
     }
 
-    public List<PerspectiveModel> getPerspectiveModels() {
-        return perspectiveModels;
+    public List<String> getUniqueIds() {
+        return uniqueIds;
     }
 
     public String getThumbnailPath() {
         return thumbnailPath;
     }
 
-    public Map<PerspectiveModel, Stack<Memento>> getUndoStacks() {
+    public Map<String, Stack<Memento>> getUndoStacks() {
         return undoStacks;
     }
 

@@ -12,7 +12,7 @@ public class RedoAction extends AbstractAction {
     @Override
     public void actionPerformed(Event event) {
         CommandManager.getInstance().redo(perspective);
-        if(CommandManager.getInstance().isEmptyRedoStack(perspective)){
+        if(CommandManager.getInstance().isEmptyRedoStack(perspective.getUniqueId())){
             perspective.setRedoButtonDisabled(true);
         }
     }

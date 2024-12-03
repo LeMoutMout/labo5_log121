@@ -4,6 +4,7 @@ import com.example.labo5_log121.commands.Memento;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.UUID;
 
 public class PerspectiveModel extends Subject implements Serializable {
     @Serial
@@ -13,6 +14,7 @@ public class PerspectiveModel extends Subject implements Serializable {
     private double translationY;
     private boolean isUndoDisabled;
     private boolean isRedoDisabled;
+    private String uniqueId;
     private final ImageModel image;
 
     public PerspectiveModel(ImageModel image) {
@@ -22,6 +24,7 @@ public class PerspectiveModel extends Subject implements Serializable {
         this.isUndoDisabled = true;
         this.isRedoDisabled = true;
         this.image = image;
+        this.uniqueId = UUID.randomUUID().toString();
     }
 
     public double getScaleFactor() {
@@ -48,6 +51,10 @@ public class PerspectiveModel extends Subject implements Serializable {
         return image;
     }
 
+    public String getUniqueId() {
+        return uniqueId;
+    }
+
     public void setScaleFactor(double scaleFactor) {
         this.scaleFactor = scaleFactor;
         notifyObservers("scaleFactorChanged");
@@ -67,6 +74,10 @@ public class PerspectiveModel extends Subject implements Serializable {
     public void setRedoButtonDisabled(boolean disabled) {
         this.isRedoDisabled = disabled;
         notifyObservers("redoButtonStateChanged");
+    }
+
+    public void setUniqueId(String uniqueId) {
+        this.uniqueId = uniqueId;
     }
 
     public Memento createMemento(){

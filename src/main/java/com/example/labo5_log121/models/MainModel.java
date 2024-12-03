@@ -10,22 +10,19 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
-public class MainModel extends Subject {
+public class MainModel extends Subject implements Serializable{
 
     private int perspectiveNumber;
     private String lastLoadedImagePath;
     private ImageModel lastLoadedImageModel;
     private ThumbnailView thumbnailView;
     private PerspectiveView lastPerspectiveView;
-    private final List<PerspectiveModel> perspectiveModels;
+    private final List<String> uniqueIds;
 
     public MainModel() {
-        this.perspectiveModels = new ArrayList<>();
+        this.uniqueIds = new ArrayList<>();
     }
 
     // Méthode pour ouvrir une image et l'afficher dans un onglet Thumbnail
@@ -38,11 +35,11 @@ public class MainModel extends Subject {
         if (file != null) {
             notifyObservers("clearTab");
             notifyObservers("enabledMenuItem");
+            uniqueIds.clear();
             perspectiveNumber = 1;
             lastLoadedImagePath = file.getAbsolutePath();
             addThumbnailTab(lastLoadedImagePath);
             ImageModel imageModel = new ImageModel(lastLoadedImagePath);
-            imageModel.setImagePath(lastLoadedImagePath);
             lastLoadedImageModel = imageModel;
         }
     }
@@ -65,8 +62,8 @@ public class MainModel extends Subject {
                 SaveData saveData = (SaveData) ois.readObject();
 
                 restoreThumbnail(saveData.getThumbnailPath());
-                restoreAllPerspectives(saveData.getPerspectiveModels());
                 CommandManager.getInstance().restoreUndoStacks(saveData.getUndoStacks());
+                restoreAllPerspectives(saveData.getUniqueIds());
 
                 notifyObservers("enabledMenuItem");
             } catch (IOException | ClassNotFoundException e) {
@@ -75,15 +72,23 @@ public class MainModel extends Subject {
         }
     }
 
-    private void restoreAllPerspectives(List<PerspectiveModel> perspectives) {
+    private void restoreAllPerspectives(List<String> uniqueIds) {
         perspectiveNumber = 1;
+        this.uniqueIds.clear();
 
-        for (PerspectiveModel model : perspectives) {
-            PerspectiveView view = new PerspectiveView(model.getImage().getImagePath());
+        for (String uniqueId : uniqueIds) {
+            PerspectiveView view = new PerspectiveView(lastLoadedImagePath);
             this.lastPerspectiveView = view;
+            PerspectiveModel model = new PerspectiveModel(lastLoadedImageModel);
+            model.setUniqueId(uniqueId);
+            this.uniqueIds.add(model.getUniqueId());
             new PerspectiveController(view, model);
             notifyObservers("addPerspectiveTab");
-            model.restorePerspective();
+            Memento lastMemento = CommandManager.getInstance().getUndoStacks().get(uniqueId).getLast();
+            if(lastMemento != null) {
+                model.restore(lastMemento);
+                model.setUndoButtonDisabled(false);
+            }
         }
     }
 
@@ -91,6 +96,8 @@ public class MainModel extends Subject {
     private void restoreThumbnail(String thumbnailPath) {
         this.thumbnailView = new ThumbnailView(thumbnailPath);
         this.lastLoadedImagePath = thumbnailPath;
+        ImageModel imageModel = new ImageModel(thumbnailPath);
+        this.lastLoadedImageModel = imageModel;
         notifyObservers("clearTab");
         notifyObservers("addThumbnailTab");
     }
@@ -104,11 +111,8 @@ public class MainModel extends Subject {
 
         if (file != null) {
             try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
-                List<PerspectiveModel> perspectives = perspectiveModels;
-                String thumbnailPath = lastLoadedImagePath;
-                Map<PerspectiveModel, Stack<Memento>> undoStacks = CommandManager.getInstance().getUndoStacks();
-
-                SaveData saveData = new SaveData(perspectives, thumbnailPath, undoStacks);
+                Map<String, Stack<Memento>> undoStacks = CommandManager.getInstance().getUndoStacks();
+                SaveData saveData = new SaveData(uniqueIds, lastLoadedImagePath, undoStacks);
                 oos.writeObject(saveData);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -132,7 +136,7 @@ public class MainModel extends Subject {
             PerspectiveView perspectiveView = new PerspectiveView(lastLoadedImagePath);
             this.lastPerspectiveView = perspectiveView;
             PerspectiveModel perspectiveModel = new PerspectiveModel(lastLoadedImageModel);
-            this.perspectiveModels.add(perspectiveModel);
+            this.uniqueIds.add(perspectiveModel.getUniqueId());
             new PerspectiveController(perspectiveView, perspectiveModel);
             notifyObservers("addPerspectiveTab");
         }

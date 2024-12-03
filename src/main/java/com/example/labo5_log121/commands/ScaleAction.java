@@ -23,19 +23,26 @@ public class ScaleAction extends AbstractAction {
     @Override
     public void actionPerformed(Event event) {
         // Sauvegarde de l'état actuel dans le Memento
-        CommandManager.getInstance().add(perspective,perspective.createMemento());
+        CommandManager.getInstance().add(perspective.getUniqueId(),perspective.createMemento());
 
         double newZoom;
-
 
         if(event instanceof ScrollEvent) {
             ScrollEvent scrollEvent = (ScrollEvent) event;
             double delta = scrollEvent.getDeltaY();
             double currentZoom = perspective.getScaleFactor();
-            newZoom = currentZoom + delta / 100;
+
+            // Calculer le nouvel incrément (0.1 = 10 %)
+            double increment = (delta > 0) ? 0.1 : -0.1;
+            newZoom = currentZoom + increment;
+
+            // Arrondir le nouveau facteur de zoom au multiple de 0.1 le plus proche
+            newZoom = Math.round(newZoom * 10) / 10.0;
+
+            // Limiter le zoom entre 0.1 (10 %) et 5.0 (500 %)
             newZoom = Math.max(0.1, Math.min(5.0, newZoom));
         } else {
-            newZoom = manualZoomFactor;
+            newZoom = (double) (Math.round(manualZoomFactor / 10) * 10) / 100;;
         }
 
         perspective.setScaleFactor(newZoom);

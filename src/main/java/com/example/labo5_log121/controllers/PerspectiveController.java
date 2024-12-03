@@ -1,7 +1,6 @@
 package com.example.labo5_log121.controllers;
 
 import com.example.labo5_log121.commands.*;
-import com.example.labo5_log121.models.ImageModel;
 import com.example.labo5_log121.models.PerspectiveModel;
 import com.example.labo5_log121.views.PerspectiveView;
 import javafx.scene.control.Button;
@@ -10,7 +9,7 @@ import javafx.scene.layout.HBox;
 
 public class PerspectiveController {
     private final PerspectiveView view;
-    private PerspectiveModel perspectiveModel;
+    private final PerspectiveModel perspectiveModel;
     private double initialMouseX;
     private double initialMouseY;
 
@@ -32,8 +31,7 @@ public class PerspectiveController {
 
         // Zoom via le slider
         zoomSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-            double zoomFactor = newVal.doubleValue() / 100.0;
-            ScaleAction scaleAction = new ScaleAction(perspectiveModel, zoomFactor);
+            ScaleAction scaleAction = new ScaleAction(perspectiveModel, newVal.doubleValue());
             scaleAction.actionPerformed(null);
         });
 

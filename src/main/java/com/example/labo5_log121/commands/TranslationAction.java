@@ -17,7 +17,7 @@ public class TranslationAction extends AbstractAction {
     @Override
     public void actionPerformed(Event event) {
         // Sauvegarder l'état après modification
-        CommandManager.getInstance().add(perspective, perspective.createMemento());
+        CommandManager.getInstance().add(perspective.getUniqueId(), perspective.createMemento());
 
         MouseEvent mouseEvent = (MouseEvent) event;
 

@@ -13,7 +13,7 @@ public class UndoAction extends AbstractAction {
     public void actionPerformed(Event event) {
         CommandManager.getInstance().undo(perspective);
         perspective.setRedoButtonDisabled(false);
-        if(CommandManager.getInstance().isEmptyUndoStack(perspective)){
+        if(CommandManager.getInstance().isEmptyUndoStack(perspective.getUniqueId())){
             perspective.setUndoButtonDisabled(true);
         }
     }
