@@ -83,8 +83,7 @@ public class PerspectiveView extends Pane implements Observer {
 
     @Override
     public void update(Subject subject, String message) {
-        if (subject instanceof PerspectiveModel) {
-            PerspectiveModel perspectiveModel = (PerspectiveModel) subject;
+        if (subject instanceof PerspectiveModel perspectiveModel) {
             switch (message) {
                 case "scaleFactorChanged" :
                     imageView.setScaleY(perspectiveModel.getScaleFactor());

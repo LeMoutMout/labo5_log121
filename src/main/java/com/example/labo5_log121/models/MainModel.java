@@ -39,8 +39,7 @@ public class MainModel extends Subject implements Serializable{
             perspectiveNumber = 1;
             lastLoadedImagePath = file.getAbsolutePath();
             addThumbnailTab(lastLoadedImagePath);
-            ImageModel imageModel = new ImageModel(lastLoadedImagePath);
-            lastLoadedImageModel = imageModel;
+            lastLoadedImageModel = new ImageModel(lastLoadedImagePath);
         }
     }
 
@@ -96,8 +95,7 @@ public class MainModel extends Subject implements Serializable{
     private void restoreThumbnail(String thumbnailPath) {
         this.thumbnailView = new ThumbnailView(thumbnailPath);
         this.lastLoadedImagePath = thumbnailPath;
-        ImageModel imageModel = new ImageModel(thumbnailPath);
-        this.lastLoadedImageModel = imageModel;
+        this.lastLoadedImageModel = new ImageModel(thumbnailPath);
         notifyObservers("clearTab");
         notifyObservers("addThumbnailTab");
     }
