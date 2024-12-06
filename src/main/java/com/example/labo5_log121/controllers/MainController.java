@@ -6,7 +6,7 @@ import javafx.scene.control.MenuItem;
 
 public class MainController {
     private final MainView mainView;
-    private MainModel mainModel;
+    private final MainModel mainModel;
 
     public MainController(MainView mainView) {
         this.mainView = mainView;

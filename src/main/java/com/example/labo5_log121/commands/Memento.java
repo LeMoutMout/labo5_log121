@@ -1,20 +1,19 @@
 package com.example.labo5_log121.commands;
 
-
 import java.io.Serial;
 import java.io.Serializable;
 
 public class Memento implements Serializable {
     private final double scaleFactor;
-    private final double translationAxeY;
-    private final double translationAxeX;
+    private final double translationY;
+    private final double translationX;
     @Serial
     private static final long serialVersionUID = 1L;
 
-    public Memento(double scaleFactor, double translationAxeX, double translationAxeY) {
+    public Memento(double scaleFactor, double translationX, double translationY) {
         this.scaleFactor = scaleFactor;
-        this.translationAxeX = translationAxeX;
-        this.translationAxeY = translationAxeY;
+        this.translationX = translationX;
+        this.translationY = translationY;
     }
 
     public double getScaleFactor() {
@@ -22,10 +21,10 @@ public class Memento implements Serializable {
     }
 
     public double getTranslationY() {
-        return translationAxeY;
+        return translationY;
     }
 
     public double getTranslationX() {
-        return translationAxeX;
+        return translationX;
     }
 }

@@ -1,12 +1,9 @@
 package com.example.labo5_log121.commands;
 
 import com.example.labo5_log121.models.PerspectiveModel;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
-import com.example.labo5_log121.commands.Memento;
-
 
 public class CommandManager {
     private static final CommandManager commandManagerInstance = new CommandManager();

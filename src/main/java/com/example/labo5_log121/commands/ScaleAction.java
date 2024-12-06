@@ -6,18 +6,18 @@ import javafx.scene.input.ScrollEvent;
 
 public class ScaleAction extends AbstractAction {
 
-    private final Double manualZoomFactor;
+    private final double manualZoomFactor;
 
     // Constructeur pour l'utilisation avec la molette de souris
     public ScaleAction(PerspectiveModel perspective) {
         super(perspective);
-        this.manualZoomFactor = null;  // Aucun zoom manuel, ce sera calculé via l'événement
+        this.manualZoomFactor = Double.parseDouble(null);  // Aucun zoom manuel, ce sera calculé via l'événement
     }
 
     // Constructeur pour l'utilisation avec le slider
     public ScaleAction(PerspectiveModel perspective, double manualZoomFactor) {
         super(perspective);
-        this.manualZoomFactor = manualZoomFactor;  // Facteur de zoom manuel
+        this.manualZoomFactor = manualZoomFactor;
     }
 
     @Override

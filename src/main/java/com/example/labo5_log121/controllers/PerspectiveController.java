@@ -8,21 +8,21 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 
 public class PerspectiveController {
-    private final PerspectiveView view;
+    private final PerspectiveView perspectiveView;
     private final PerspectiveModel perspectiveModel;
     private double initialMouseX;
     private double initialMouseY;
 
-    public PerspectiveController(PerspectiveView view, PerspectiveModel perspectiveModel) {
-        this.view = view;
+    public PerspectiveController(PerspectiveView perspectiveView, PerspectiveModel perspectiveModel) {
+        this.perspectiveView = perspectiveView;
         this.perspectiveModel = perspectiveModel;
-        this.perspectiveModel.addObserver(view);
+        this.perspectiveModel.addObserver(perspectiveView);
         initialize();
     }
 
     private void initialize() {
         //récupère la bottomBar
-        HBox bottomBar = view.getBottomBar();
+        HBox bottomBar = perspectiveView.getBottomBar();
 
         //récupère les éléments de la bottomBar
         Button copyButton = (Button) bottomBar.getChildren().get(4);
@@ -38,7 +38,7 @@ public class PerspectiveController {
         });
 
         // Zoom avec la molette de la souris
-        view.setOnScroll(event -> {
+        perspectiveView.setOnScroll(event -> {
             ScaleAction scaleAction = new ScaleAction(perspectiveModel);
             scaleAction.actionPerformed(event);
         });
@@ -68,12 +68,12 @@ public class PerspectiveController {
             redoAction.actionPerformed(event);
         });
 
-        view.getImageView().setOnMousePressed(event -> {
+        perspectiveView.getImageView().setOnMousePressed(event -> {
             initialMouseX = event.getSceneX();
             initialMouseY = event.getSceneY();
         });
 
-        view.getImageView().setOnMouseDragged(event -> {
+        perspectiveView.getImageView().setOnMouseDragged(event -> {
             // Calculer et appliquer la translation
             TranslationAction translationAction = new TranslationAction(perspectiveModel, initialMouseX, initialMouseY);
             translationAction.actionPerformed(event);

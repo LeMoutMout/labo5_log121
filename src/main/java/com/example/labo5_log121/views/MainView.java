@@ -5,8 +5,6 @@ import com.example.labo5_log121.models.Subject;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 
-import java.io.File;
-
 public class MainView extends BorderPane implements Observer{
     private final TabPane tabPane;
     private final MenuItem newProjectMenuItem;
