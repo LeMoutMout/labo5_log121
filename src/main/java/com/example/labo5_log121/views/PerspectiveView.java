@@ -92,10 +92,12 @@ public class PerspectiveView extends Pane implements Observer {
                     scaleFactor.setText(perspectiveModel.getScaleFactor() * 100 + "%");
                     break;
                 case "translationChanged" :
-                    imageView.setTranslateX(perspectiveModel.getTranslationX());
-                    imageView.setTranslateY(perspectiveModel.getTranslationY());
-                    coordX.setText(String.format("%.3f", perspectiveModel.getTranslationX()));
-                    coordY.setText(String.format("%.3f", perspectiveModel.getTranslationY()));
+                    double translationX = perspectiveModel.getTranslationX();
+                    double translationY = perspectiveModel.getTranslationY();
+                    imageView.setTranslateX(translationX);
+                    imageView.setTranslateY(translationY);
+                    coordX.setText(String.format("%.3f", translationX));
+                    coordY.setText(String.format("%.3f", translationY));
                     break;
                 case "undoButtonStateChanged" :
                     undoButton.setDisable(perspectiveModel.isUndoDisabled());
